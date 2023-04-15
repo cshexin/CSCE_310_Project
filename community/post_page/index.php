@@ -22,13 +22,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="index.css">
-
     <title>Community Page</title>
   </head>
-  <body>
-    <h1>Community Page</h1>
+    <?php include('../../templates/header.php'); ?>
+
+    
     <div class="container">
+    <h1>Community Page</h1>
       <div class="create-post">
           <input id="input" type="text" placeholder="Create Post"  id="my-input" onclick="goToHomepage()">
       </div>
