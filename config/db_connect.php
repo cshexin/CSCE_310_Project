@@ -1,6 +1,6 @@
 <?php
   //connect to database
-  $conn = mysqli_connect('localhost', 'hexin', '123', 'csce_310_database');
+  $conn = mysqli_connect(/*fill user information from phpmyadmin */); 
   
   //check connection
   if(!$conn){
