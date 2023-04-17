@@ -26,7 +26,7 @@
   </head>
 
     <?php include('../../header/header.php'); ?>
-    
+
     <link rel="stylesheet" type="text/css" href="index.css">
     
     <div class="container">
@@ -37,7 +37,7 @@
 
       <div class="post-container">
         <?php foreach($posts as $post){ ?>
-          <a href="#" class="card-link">
+          <a href="http://localhost/csce_310_project/community/comment_page/#" class="card-link">
             <div class="post-card">
                 <div class="card-content">
                   <h3><?php echo htmlspecialchars($post['title']); ?></h6>

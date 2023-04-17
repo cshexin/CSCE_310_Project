@@ -4,7 +4,7 @@
 
       // Write query for all posts
       $post_id = 1;
-      $sql = 'SELECT * FROM comment';
+      $sql = "SELECT * FROM comment WHERE post_id = $post_id";
       $currentPostsql = "SELECT * FROM post WHERE post_id = $post_id";
 
       // make query & get result
