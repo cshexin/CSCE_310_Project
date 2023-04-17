@@ -1,3 +1,4 @@
+
 <?php
       // connect database
       include('../../config/db_connect.php');
@@ -10,6 +11,7 @@
 
       // fetch the resulting rows as an array
       $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      $post_id = 1;
       
       mysqli_free_result($result);
 
@@ -37,7 +39,7 @@
 
       <div class="post-container">
         <?php foreach($posts as $post){ ?>
-          <a href="http://localhost/csce_310_project/community/comment_page/#" class="card-link">
+          <a href="../comment_page.php?postid=1" class="card-link">   <!-- set url -->
             <div class="post-card">
                 <div class="card-content">
                   <h3><?php echo htmlspecialchars($post['title']); ?></h6>
@@ -49,7 +51,6 @@
     </div>
     </div>
     
-
     <script src="index.js"></script>
   </body>
 </html>
