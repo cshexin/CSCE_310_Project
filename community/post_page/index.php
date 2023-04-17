@@ -24,8 +24,10 @@
   <head>
     <title>Community Page</title>
   </head>
-    <?php include('../../templates/header.php'); ?>
 
+    <?php include('../../header/header.php'); ?>
+    
+    <link rel="stylesheet" type="text/css" href="index.css">
     
     <div class="container">
     <h1>Community Page</h1>

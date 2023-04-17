@@ -1,0 +1,41 @@
+h1 {
+    margin-top: 20px;
+    width: 50%;
+    text-align: left;
+}
+
+body {
+    background-color: rgb(241, 223, 209);
+}
+
+.web-title {
+    font-weight: bolder;
+    font-size: 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+}
+
+nav {
+    height: 100px;
+    background-color: #5a0606;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: bisque;
+    text-align: center;
+}
+
+.navbar-items{
+    font-weight: normal;
+    font-size: 20px;
+    margin-right: 150px;
+    margin-left: 150px;
+    font-size: 25px;
+}
+
+.nav-item{
+    margin-right: 50px;
+    margin-left: 50px;
+}
