@@ -39,7 +39,7 @@
 
       <div class="post-container">
         <?php foreach($posts as $post){ ?>
-          <a href="../comment_page.php?postid=1" class="card-link">   <!-- set url -->
+          <a href="../comment_page.php?postid=<?php echo $post['post_id']; ?>" class="card-link"> 
             <div class="post-card">
                 <div class="card-content">
                   <h3><?php echo htmlspecialchars($post['title']); ?></h6>
