@@ -13,7 +13,7 @@
         <div class="navbar-items">
             <a class="nav-item" href="#">Appointment</a>
 
-            <a class="nav-item" href="#">Log out</a>
+            <a class="nav-item" href="#">Logout</a>
         </div>
 
 

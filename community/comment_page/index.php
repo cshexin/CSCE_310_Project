@@ -40,15 +40,26 @@
 <html>
   <head>
     <title>Comment</title>
+    <?php
+      $cssFile = 'index.css';
+      $cssContent = file_get_contents($cssFile);
+      $hash = md5($cssContent); 
+    ?>
+     <link rel="stylesheet" type="text/css" href="index.css?version=<?php echo $hash; ?>">
   </head>
 
     <?php include('../../header/header.php'); ?>
     
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <!-- <link rel="stylesheet" type="text/css" href="index.css"> -->
 
-    <div class="container">
-    <?php echo "<h1>" . htmlspecialchars($currentPost['title']) . "</h1>"; ?>
-    <?php echo "<p>" . htmlspecialchars($currentPost['body']) . "</p>"; ?>
+    <div class="container"> 
+
+      <div class="post-card">
+        <?php echo "<h1>" . htmlspecialchars($currentPost['title']) . "</h1>"; ?>
+        <br>
+        <?php echo "<p>" . htmlspecialchars($currentPost['body']) . "</p>"; ?>
+      </div>
+          
       <div class="create-post">
           <input id="input" type="text" placeholder="Create Post"  id="my-input" onclick="goToHomepage()">
       </div>
@@ -62,7 +73,8 @@
                 </div>
             </div>
         <?php } ?>
-    </div>
+      </div>
+
     </div>
     
 
