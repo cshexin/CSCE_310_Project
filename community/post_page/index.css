@@ -13,14 +13,24 @@
 
 }
 
-#input {
+#title-input {
     width:98%;
     height: 30px;
+    justify-content: center;
+}
+
+#body-input {
+    width:98%;
+    height: 100px;
     justify-content: center;
 
 }
 
-#input::placeholder{
+#title-input::placeholder{
+    padding: 10px;
+}
+
+#body-input::placeholder{
     padding: 10px;
 }
 

@@ -25,16 +25,14 @@
 <html>
   <head>
     <title>Community Page</title>
-  </head>
-
-    <?php include('../../header/header.php'); ?>
-
     <link rel="stylesheet" type="text/css" href="index.css">
+    <?php include('../../header/header.php'); ?>
     
     <div class="container">
     <h1>Community Page</h1>
       <div class="create-post">
-          <input id="input" type="text" placeholder="Create Post"  id="my-input" onclick="goToHomepage()">
+          <input id="input" type="text" placeholder="Create Post">
+
       </div>
 
       <div class="post-container">

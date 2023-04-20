@@ -9,7 +9,7 @@ body {
 }
 
 .web-title {
-    font-weight: bolder;
+    font-weight: bold;
     font-size: 40px;
     justify-content: center;
     align-items: center;
@@ -31,10 +31,9 @@ nav {
 
 .navbar-items{
     font-weight: normal;
+    margin-right: 90px;
+    margin-left: 90px;
     font-size: 20px;
-    margin-right: 150px;
-    margin-left: 150px;
-    font-size: 25px;
 }
 
 .nav-item{
