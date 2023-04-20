@@ -19,7 +19,7 @@
     justify-content: center;
 }
 
-#body-input {
+#content-input {
     width:98%;
     height: 100px;
     justify-content: center;
@@ -31,7 +31,7 @@
     padding: 10px;
 }
 
-#body-input::placeholder{
+#content-input::placeholder{
     padding: 10px;
 }
 

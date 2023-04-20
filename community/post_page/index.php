@@ -1,22 +1,29 @@
 
 <?php
-      // connect database
-      include('../../config/db_connect.php');
+    $cssFile = 'index.css';
+    $cssContent = file_get_contents($cssFile);
+    $hash = md5($cssContent);
 
-      // Write query for all posts
-      $sql = 'SELECT * FROM post';
+    // connect database
+    include('../../config/db_connect.php');
 
-      // make query & get result
-      $result = mysqli_query($conn, $sql);
+    // Get the form data
+    $title = $_POST['title'];
 
-      // fetch the resulting rows as an array
-      $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
-      $post_id = 1;
-      
-      mysqli_free_result($result);
+    // Write query for all posts
+    $sql = 'SELECT * FROM post';
 
-      // close connection
-      mysqli_close($conn);
+    // make query & get result
+    $result = mysqli_query($conn, $sql);
+
+    // fetch the resulting rows as an array
+    $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $post_id = 1;
+    
+    mysqli_free_result($result);
+
+    // close connection
+    mysqli_close($conn);
 
 ?>
 
@@ -25,17 +32,17 @@
 <html>
   <head>
     <title>Community Page</title>
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="index.css?version=<?php echo $hash; ?>">
     <?php include('../../header/header.php'); ?>  
     
     <div class="container">
     <h1>Community Page</h1>
       <div class="create-post">
-          <input id="title-input" type="text" placeholder="Create Title">
+          <input id="title-input" type="text" placeholder="Create Title" name="title">
           <br>
-          <input id="body-input" type="text" placeholder="Create Body">
+          <input id="content-input" type="text" placeholder="Create Content" name="content">
           <br> 
-          <button class="submit-btn"> submit </button>
+          <button class="submit-btn" type="submit" value="Submit" > submit </button>
 
       </div>
 
