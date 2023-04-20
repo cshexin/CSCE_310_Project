@@ -26,18 +26,22 @@
   <head>
     <title>Community Page</title>
     <link rel="stylesheet" type="text/css" href="index.css">
-    <?php include('../../header/header.php'); ?>
+    <?php include('../../header/header.php'); ?>  
     
     <div class="container">
     <h1>Community Page</h1>
       <div class="create-post">
-          <input id="input" type="text" placeholder="Create Post">
+          <input id="title-input" type="text" placeholder="Create Title">
+          <br>
+          <input id="body-input" type="text" placeholder="Create Body">
+          <br> 
+          <button class="submit-btn"> submit </button>
 
       </div>
 
       <div class="post-container">
         <?php foreach($posts as $post){ ?>
-          <a href="../comment_page.php?postid=<?php echo $post['post_id']; ?>" class="card-link"> 
+          <a href="../comment_page.php/?postid=<?php echo $post['post_id']; ?>" class="card-link"> 
             <div class="post-card">
                 <div class="card-content">
                   <h3><?php echo htmlspecialchars($post['title']); ?></h6>

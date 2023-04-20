@@ -23,6 +23,7 @@
     width:98%;
     height: 100px;
     justify-content: center;
+    margin-top: 20px;
 
 }
 
@@ -34,13 +35,25 @@
     padding: 10px;
 }
 
+.submit-btn{
+    font-family: Arial; 
+    font-size: 16px; 
+    font-weight: bold; 
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    background-color: #FFFFFF;
+    color: #681414;
+  }
+
 .post-container {
     width: 100%;
-
     display: grid;
     grid-template-columns: auto;
     grid-gap: 20px;
-  }
+}
 
 .post-card {
     display: flex;
