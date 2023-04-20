@@ -2,8 +2,22 @@
       // connect database
       include('../../config/db_connect.php');
 
+      // Check if the URL contains the "postid" parameter
+      if (!isset($_GET['postid'])) {
+        // Set the default "postid" value
+        $defaultPostId = 1; 
+
+        // Build a new URL, including the "postid" parameter
+        $newUrl = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "?postid=" . $defaultPostId;
+
+        // Redirect to the new URL
+        header("Location: " . $newUrl);
+        exit();
+      }
+      
+      $post_id = $_GET['postid'];
+
       // Write query for all posts
-      $post_id = 1;
       $sql = "SELECT * FROM comment WHERE post_id = $post_id";
       $currentPostsql = "SELECT * FROM post WHERE post_id = $post_id";
 
@@ -26,15 +40,26 @@
 <html>
   <head>
     <title>Comment</title>
+    <?php
+      $cssFile = 'index.css';
+      $cssContent = file_get_contents($cssFile);
+      $hash = md5($cssContent); 
+    ?>
+     <link rel="stylesheet" type="text/css" href="index.css?version=<?php echo $hash; ?>">
   </head>
 
     <?php include('../../header/header.php'); ?>
     
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <!-- <link rel="stylesheet" type="text/css" href="index.css"> -->
 
-    <div class="container">
-    <?php echo "<h1>" . htmlspecialchars($currentPost['title']) . "</h1>"; ?>
-    <?php echo "<p>" . htmlspecialchars($currentPost['body']) . "</p>"; ?>
+    <div class="container"> 
+
+      <div class="post-card">
+        <?php echo "<h1>" . htmlspecialchars($currentPost['title']) . "</h1>"; ?>
+        <br>
+        <?php echo "<p>" . htmlspecialchars($currentPost['body']) . "</p>"; ?>
+      </div>
+          
       <div class="create-post">
           <input id="input" type="text" placeholder="Create Post"  id="my-input" onclick="goToHomepage()">
       </div>
@@ -48,7 +73,8 @@
                 </div>
             </div>
         <?php } ?>
-    </div>
+      </div>
+
     </div>
     
 
