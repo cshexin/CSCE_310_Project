@@ -6,9 +6,37 @@
 
     // connect database
     include('../../config/db_connect.php');
-
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
     // Get the form data
-    $title = $_POST['title'];
+    if(isset($_POST['submit'])){
+      $title = mysqli_real_escape_string($conn, $_POST["title"]);
+      $content = mysqli_real_escape_string($conn, $_POST["content"]);
+      $current_time = time();
+      $curr_time = date('Y-m-d H:i:s', $current_time);
+      $p_id = 1; // HARD CODE
+      $d_id = 2; // HARD CODE
+
+      echo $p_id . $d_id . $title . $content . $curr_time;
+
+      $sql_insert = "INSERT INTO post(p_id, d_id, title, body, created_at) VALUES ($p_id, $d_id, $title, $content, NOW())";
+      
+      if(mysqli_query($conn, $sql_insert)){
+        if(mysqli_affected_rows($conn) > 0){
+          //success
+          header('Location: index.php');
+          exit();
+        } else {
+          echo 'querry error: No rows were affected';
+        }
+      } else {
+        echo 'querry error: ' . mysqli_error($conn);
+      }
+    } else {
+      echo "empty";
+    }
+
 
     // Write query for all posts
     $sql = 'SELECT * FROM post';
@@ -37,14 +65,13 @@
     
     <div class="container">
     <h1>Community Page</h1>
-      <div class="create-post">
+      <form method="post" action="index.php" class="create-post">
           <input id="title-input" type="text" placeholder="Create Title" name="title">
           <br>
           <input id="content-input" type="text" placeholder="Create Content" name="content">
           <br> 
-          <button class="submit-btn" type="submit" value="Submit" > submit </button>
-
-      </div>
+          <button class="submit-btn" type="submit" value="submit" name="submit" > submit </button>
+      </form>
 
       <div class="post-container">
         <?php foreach($posts as $post){ ?>
