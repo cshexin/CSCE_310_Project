@@ -20,7 +20,7 @@
 
       echo $p_id . $d_id . $title . $content . $curr_time;
 
-      $sql_insert = "INSERT INTO post(p_id, d_id, title, body, created_at) VALUES ($p_id, $d_id, $title, $content, NOW())";
+      $sql_insert = "INSERT INTO post(p_id, d_id, title, post_content, created_at) VALUES ($p_id, $d_id, '$title', '$content', NOW())";
       
       if(mysqli_query($conn, $sql_insert)){
         if(mysqli_affected_rows($conn) > 0){
@@ -46,7 +46,6 @@
 
     // fetch the resulting rows as an array
     $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    $post_id = 1;
     
     mysqli_free_result($result);
 
@@ -79,13 +78,19 @@
             <div class="post-card">
                 <div class="card-content">
                   <h3><?php echo htmlspecialchars($post['title']); ?></h6>
-                  <p><?php echo html_entity_decode($post['body']); ?></p>
+                  <p><?php echo html_entity_decode($post['post_content']); ?></p>
+                  <div class="post-options">
+                    <?php if ($post['p_id'] == 1) { ?>
+                      <button class="delete-btn">Delete</button>
+                      <button class="edit-btn">Edit</button>
+                    <?php } ?>
+                  </div>
                 </div>
             </div>
           </a>
         <?php } ?>
-    </div>
-    </div>
+      </div>
+
     
     <script src="index.js"></script>
   </body>
