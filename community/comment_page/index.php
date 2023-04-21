@@ -61,7 +61,8 @@
       </div>
           
       <div class="create-post">
-          <input id="input" type="text" placeholder="Create Post"  id="my-input" onclick="goToHomepage()">
+          <input id="input" type="text" placeholder="Create Comment">
+          <script src="index.js"></script>
       </div>
 
       <div class="post-container">
