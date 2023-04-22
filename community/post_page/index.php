@@ -9,6 +9,7 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
+
     // Get the form data
     if(isset($_POST['submit'])){
       $title = mysqli_real_escape_string($conn, $_POST["title"]);
@@ -33,9 +34,7 @@
       } else {
         echo 'querry error: ' . mysqli_error($conn);
       }
-    } else {
-      echo "empty";
-    }
+    } 
 
 
     // Write query for all posts
@@ -80,10 +79,12 @@
                   <h3><?php echo htmlspecialchars($post['title']); ?></h6>
                   <p><?php echo html_entity_decode($post['post_content']); ?></p>
                   <div class="post-options">
-                    <?php if ($post['p_id'] == 1) { ?>
-                      <button class="delete-btn">Delete</button>
-                      <button class="edit-btn">Edit</button>
-                    <?php } ?>
+                    <form method="post" action="index.php" class="edit-post">
+                      <?php if ($post['p_id'] == 1) {?>
+                        <button class="delete-btn">Delete</button>
+                        <button class="edit-btn">Edit</button>
+                      <?php } ?>
+                    </form>
                   </div>
                 </div>
             </div>
