@@ -18,7 +18,7 @@
       $curr_time = date('Y-m-d H:i:s', $current_time);
       $p_id = 1; // HARD CODE
       $d_id = 2; // HARD CODE
-
+      $post_id = 1; // HARD CODE
       echo $p_id . $d_id . $title . $content . $curr_time;
 
       $sql_insert = "INSERT INTO post(p_id, d_id, title, post_content, created_at) VALUES ($p_id, $d_id, '$title', '$content', NOW())";
@@ -60,7 +60,8 @@
     <title>Community Page</title>
     <link rel="stylesheet" type="text/css" href="index.css?version=<?php echo $hash; ?>">
     <?php include('../../header/header.php'); ?>  
-    
+    <script src="index.js"></script>
+
     <div class="container">
     <h1>Community Page</h1>
       <form method="post" action="index.php" class="create-post">
@@ -73,26 +74,34 @@
 
       <div class="post-container">
         <?php foreach($posts as $post){ ?>
-          <a href="../comment_page.php/?postid=<?php echo $post['post_id']; ?>" class="card-link"> 
-            <div class="post-card">
+            <div class="post-card" id="post-<?php echo $post['post_id']; ?>">
                 <div class="card-content">
-                  <h3><?php echo htmlspecialchars($post['title']); ?></h6>
+                  <h3>
+                    <a href="../comment_page.php/?postid=<?php echo $post['post_id']; ?>" class="card-link"> 
+                      <?php echo htmlspecialchars($post['title']); ?>
+                    </a>
+                  </h3>
                   <p><?php echo html_entity_decode($post['post_content']); ?></p>
+
                   <div class="post-options">
-                    <form method="post" action="index.php" class="edit-post">
                       <?php if ($post['p_id'] == 1) {?>
                         <button class="delete-btn">Delete</button>
-                        <button class="edit-btn">Edit</button>
+                        <button class="edit-btn"  onclick="showEditForm(<?php echo $post['post_id']; ?>)">Edit</button>
                       <?php } ?>
-                    </form>
-                  </div>
+                  </div>                                    
                 </div>
+                <form method="post" action="./edit.php" class="edit-form" id="edit-post-<?php echo $post['post_id']; ?>" style="display: none;">
+                  <input placeholder="Edit Title" type="text" name="title" id="edit-title">
+                  <br>
+                  <input type="text" name="content" id="edit-content">
+                  <br>
+                  <button type="submit" name="submit" class="submit-btn">Save</button>
+                  <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                </form>
             </div>
-          </a>
         <?php } ?>
       </div>
 
-    
-    <script src="index.js"></script>
+    </div>
   </body>
 </html>

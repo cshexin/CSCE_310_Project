@@ -10,7 +10,6 @@
     margin-bottom: 15px;
     text-align: center;
     justify-content: center;
-
 }
 
 #title-input {
@@ -64,6 +63,33 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 10px;
     margin: 10px;
+    overflow-wrap: break-word;
+}
+
+.edit-form{
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    vertical-align: top;
+    text-align: left;
+    overflow-wrap: break-word;
+}
+
+#edit-title{
+    width:98%;
+    height: 30px;
+    justify-content: center;
+}
+
+#edit-content{
+    width:98%;
+    height: 100px;
+    margin-top: 20px;
+    vertical-align: top;
+    text-align: left;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 a {
