@@ -1,5 +1,4 @@
 function showEditForm(postId) {
-  console.log("enter js");
   var postCard = document.querySelector('#post-' + postId);
   var title = postCard.querySelector('.card-content h3').textContent;
   var content = postCard.querySelector('.card-content p').textContent;

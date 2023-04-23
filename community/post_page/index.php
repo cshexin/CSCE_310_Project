@@ -19,7 +19,6 @@
       $p_id = 1; // HARD CODE
       $d_id = 2; // HARD CODE
       $post_id = 1; // HARD CODE
-      echo $p_id . $d_id . $title . $content . $curr_time;
 
       $sql_insert = "INSERT INTO post(p_id, d_id, title, post_content, created_at) VALUES ($p_id, $d_id, '$title', '$content', NOW())";
       
@@ -85,7 +84,10 @@
 
                   <div class="post-options">
                       <?php if ($post['p_id'] == 1) {?>
-                        <button class="delete-btn">Delete</button>
+                        <form method="POST" action="./delete.php">
+                            <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                            <button type="submit" name="delete" value="delete" class="delete-btn">Delete</button>
+                        </form>
                         <button class="edit-btn"  onclick="showEditForm(<?php echo $post['post_id']; ?>)">Edit</button>
                       <?php } ?>
                   </div>                                    
