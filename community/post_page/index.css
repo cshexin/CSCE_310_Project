@@ -23,7 +23,7 @@
     height: 100px;
     justify-content: center;
     margin-top: 20px;
-
+    vertical-align: top;
 }
 
 #title-input::placeholder{
@@ -90,6 +90,10 @@
     word-wrap: break-word;
     white-space: pre-wrap;
     overflow-wrap: break-word;
+}
+
+.delete-btn-form, .edit-btn {
+    display: inline-block;
 }
 
 a {
