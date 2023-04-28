@@ -1,0 +1,17 @@
+#appointment_detail {
+    display: flex;
+    /* background-color: #e7e7e7; */
+}
+
+#appointment_text {
+
+}
+
+.errors_made {
+    color: red;
+}
+
+#appointment_button button{
+    min-width: 50px;
+    min-height: 50px;
+}
