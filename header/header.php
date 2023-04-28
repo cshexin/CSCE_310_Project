@@ -1,5 +1,5 @@
 
-    <link rel="stylesheet" type="text/css" href="../header/header.css">
+    <link rel="stylesheet" type="text/css" href="../../header/header.css">
 </head>
 <body>
     <nav>
@@ -10,7 +10,7 @@
         <a class="web-title" href="#">Howdy Healthy</a>
         
         <div class="navbar-items">
-            <a class="nav-item" href="/csce_310_project/appointment">Appointment</a>
+            <a class="nav-item" href="../dashboard/index.php">Appointment</a>
             <a class="nav-item" href="#">Logout</a>
         </div>
     </nav>
