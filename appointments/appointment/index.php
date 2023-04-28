@@ -4,7 +4,7 @@
     
     $app_id = $_POST['app_id_button'];
     // get appointment id
-    
+    //$app_id = 1;
     // wrtie query for all appointments
     $sql = "SELECT * FROM appointment WHERE app_id = $app_id";
 
@@ -41,7 +41,7 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang=eng>
     <head>
         <title>Appointment Page</title>
         <link rel="stylesheet" type="text/css" href="index.css?version=<?php echo $hash; ?>">
@@ -56,7 +56,8 @@
                 <label for="pname"> Patient Name:</label>
                 <input type="text" id="pname" name="pname" value="<?php echo $patientName; ?>"> <br> <br>
                 <label for="meeting-time">Date and Time: </label>
-                <input type="datetime-local" id="meeting-time" name="meeting-time" value="<?php echo $finalTime; ?>"> <br> <br>
+                <input type="datetime-local" id="meeting-time" name="meeting-time" value="<?php echo $finalTime; ?>">
+                <br><br>
             </div>
             <div id="appointment_button">
                 <button type="submit" name="submit" value="submit">Submit</button>
