@@ -32,3 +32,8 @@
     width: 500px;
     height: 300px;
 }
+
+#app_id_button:hover{
+    color: #ffff;
+    background-color: #5a0606;
+}
