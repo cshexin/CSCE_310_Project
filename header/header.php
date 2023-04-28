@@ -5,7 +5,7 @@
     <nav>
         <div class="navbar-items">
             <a class="nav-item" href="#">Profile</a>
-            <a class="nav-item" href="#">Community</a>
+            <a class="nav-item" href="/csce_310_project/community/post_page">Community</a>
         </div>
 
         <a class="web-title" href="#">Howdy Healthy</a>
@@ -15,6 +15,4 @@
 
             <a class="nav-item" href="#">Logout</a>
         </div>
-
-
     </nav>
