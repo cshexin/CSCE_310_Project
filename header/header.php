@@ -10,7 +10,7 @@
         <a class="web-title" href="#">Howdy Healthy</a>
         
         <div class="navbar-items">
-            <a class="nav-item" href="../dashboard/index.php">Appointment</a>
+            <a class="nav-item" href="../../appointments/dashboard">Appointment</a>
             <a class="nav-item" href="#">Logout</a>
         </div>
     </nav>
