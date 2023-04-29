@@ -56,6 +56,8 @@
                       <?php echo htmlspecialchars($post['title']); ?>
                     </a>
                   </h3>
+                  <h6>Posted by <?php echo $post['p_id']; ?></h6>
+                  <h6>Posted by <?php echo $post['created_at']; ?></h6>
                   <p><?php echo html_entity_decode($post['post_content']); ?></p>
 
                   <div class="post-options">
