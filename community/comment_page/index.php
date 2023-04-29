@@ -48,12 +48,9 @@
      <link rel="stylesheet" type="text/css" href="index.css?version=<?php echo $hash; ?>">
   </head>
 
-    <?php include('../../header/header.php'); ?>
-    
-    <!-- <link rel="stylesheet" type="text/css" href="index.css"> -->
+  <?php include('../../header/header.php'); ?>
 
-    <div class="container"> 
-
+  <div class="container"> 
       <div class="post-card">
         <?php echo "<h1>" . htmlspecialchars($currentPost['title']) . "</h1>"; ?>
         <br>
@@ -61,24 +58,28 @@
       </div>
           
       <div class="create-post">
-          <input id="input" type="text" placeholder="Create Comment">
-          <script src="index.js"></script>
+        <form action="insert_comment.php" method="POST">            
+          <input id="input" type="text" name="comment" placeholder="Create Comment" required>
+          <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+          <input type="submit" name="submit" value="Submit Comment">
+        </form>
       </div>
 
       <div class="post-container">
         <?php foreach($comments as $comment){ ?>
             <div class="post-card">
-                <div class="card-content">
-                  <p><?php echo htmlspecialchars($comment['comment_text']); ?></p>
-                  <p><?php echo html_entity_decode($comment['comment_date']); ?></p>
-                </div>
+            <div class="card-content">
+                <p><?php echo htmlspecialchars($comment['comment_text']); ?></p>
+                <p>
+                    <?php echo html_entity_decode($comment['comment_time']); ?>
+                    <?php echo html_entity_decode($comment['comment_date']); ?> 
+                </p>
+            </div>
             </div>
         <?php } ?>
       </div>
+  </div>
 
-    </div>
-    
-
-    <script src="index.js"></script>
+  <script src="index.js"></script>
   </body>
 </html>
