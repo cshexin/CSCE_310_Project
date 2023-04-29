@@ -52,7 +52,7 @@
             <div class="post-card" id="post-<?php echo $post['post_id']; ?>">
                 <div class="card-content">
                   <h3>
-                    <a href="../comment_page.php/?postid=<?php echo $post['post_id']; ?>" class="card-link"> 
+                    <a href="../comment_page/index.php?postid=<?php echo $post['post_id']; ?>#" class="card-link"> 
                       <?php echo htmlspecialchars($post['title']); ?>
                     </a>
                   </h3>
