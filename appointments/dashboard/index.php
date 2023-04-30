@@ -40,7 +40,7 @@
         <h1>Dashboard</h1>
         <div id="dashboard-title">
             <h3> Hello, <?php echo $patientName;?></h3>
-            <form action="../appointment/create.php" method="post">
+            <form action="create.php" method="post">
                 <button type="input" id="add_app" name="add_app" value='<?php echo $patientid; ?>'>
                     <p>Schedule an Appointment<p>
                 </button>
@@ -49,11 +49,11 @@
         <div id="patient-appointments">
             <?php foreach($data as $d): ?>
             <div>
-                <form action="../appointment/index.php" method="post">
-                    <button type="input" id="app_id_button" name="app_id_button" value="<?php echo $d['app_id']; ?>">
-                        <h2>Appointment</h2>
+                <a href="details.php?id=<?php echo $d['app_id']?>">
+                    <button type="button">
+                        Appointment
                     </button>
-                </form>
+                </a>
             </div>
             <?php endforeach; ?>
         </div>
