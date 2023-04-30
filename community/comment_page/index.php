@@ -73,8 +73,8 @@
             <div class="card-content">
                 <p><?php echo htmlspecialchars($comment['comment_text']); ?></p>
                 <p>
-                    <?php echo html_entity_decode($comment['comment_time']); ?>
-                    <?php echo html_entity_decode($comment['comment_date']); ?> 
+                    <?php echo 'Comment at '. html_entity_decode($comment['comment_time']); ?>
+                    <?php echo 'on '. html_entity_decode($comment['comment_date']); ?> 
                 </p>
                 <?php 
                   if ($comment['p_id'] == $p_id && $comment['d_id'] == $d_id) {
