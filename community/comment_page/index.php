@@ -16,7 +16,8 @@
       }
       
       $post_id = $_GET['postid'];
-
+      $p_id = 1; //hard code
+      $d_id = 1; //hard code
       // Write query for all posts
       $sql = "SELECT * FROM comment WHERE post_id = $post_id";
       $currentPostsql = "SELECT * FROM post WHERE post_id = $post_id";
@@ -52,12 +53,13 @@
 
   <div class="container"> 
       <div class="post-card">
-        <?php echo "<h1>" . htmlspecialchars($currentPost['title']) . "</h1>"; ?>
+        <?php if (isset($currentPost['title'])) echo "<h1>" . htmlspecialchars($currentPost['title']) . "</h1>"; ?>
         <br>
-        <?php echo "<p>" . htmlspecialchars($currentPost['body']) . "</p>"; ?>
+        <?php if (isset($currentPost['body'])) echo "<p>" . htmlspecialchars($currentPost['body']) . "</p>"; ?>
       </div>
           
       <div class="create-post">
+        <!-- Insertion -->
         <form action="insert_comment.php" method="POST">            
           <input id="input" type="text" name="comment" placeholder="Create Comment" required>
           <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
@@ -74,6 +76,24 @@
                     <?php echo html_entity_decode($comment['comment_time']); ?>
                     <?php echo html_entity_decode($comment['comment_date']); ?> 
                 </p>
+                <?php 
+                  if ($comment['p_id'] == $p_id && $comment['d_id'] == $d_id) {
+                    echo "<div class='buttons-container'>";
+                      //Edition
+                      echo "<form action='edit_comment.php' method='post'>";
+                      echo "<input type='hidden' name='comment_id' value='" . $comment['comment_id'] . "'>";
+                      echo "<input type='hidden' name='post_id' value='" . $post_id . "'>";
+                      echo "<input type='submit' name='edit' value='Edit'>";
+                      echo "</form>";
+                      // Deletion
+                      echo "<form action='delete_comment.php' method='post'>";
+                      echo "<input type='hidden' name='comment_id' value='" . $comment['comment_id'] . "'>";
+                      echo "<input type='hidden' name='post_id' value='" . $post_id . "'>";
+                      echo "<input type='submit' name='delete' value='Delete'>";
+                      echo "</form>";
+                    echo "</div>";
+                  }
+                ?>
             </div>
             </div>
         <?php } ?>
