@@ -52,10 +52,12 @@
             <div class="post-card" id="post-<?php echo $post['post_id']; ?>">
                 <div class="card-content">
                   <h3>
-                    <a href="../comment_page.php/?postid=<?php echo $post['post_id']; ?>" class="card-link"> 
+                    <a href="../comment_page/index.php?postid=<?php echo $post['post_id']; ?>#" class="card-link"> 
                       <?php echo htmlspecialchars($post['title']); ?>
                     </a>
                   </h3>
+                  <h6>Posted by <?php echo $post['p_id']; ?></h6>
+                  <h6>Posted by <?php echo $post['created_at']; ?></h6>
                   <p><?php echo html_entity_decode($post['post_content']); ?></p>
 
                   <div class="post-options">
