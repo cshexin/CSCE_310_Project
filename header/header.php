@@ -15,6 +15,5 @@
 
             <a class="nav-item" href="#">Log out</a>
         </div>
-
-
     </nav>
+

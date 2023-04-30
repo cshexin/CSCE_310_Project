@@ -1,6 +1,6 @@
 <?php
   //connect to database
-  $conn = mysqli_connect(/*fill user information from phpmyadmin */); 
+  $conn = mysqli_connect("localhost", "andrew", "team06", "csce_310_database"); 
   
   //check connection
   if(!$conn){

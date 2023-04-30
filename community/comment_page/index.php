@@ -19,7 +19,6 @@
       mysqli_free_result($currentPostResult);
       // close connection
       mysqli_close($conn);
-      
 ?>
 
 <!DOCTYPE html>
