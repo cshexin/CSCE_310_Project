@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 14, 2023 at 08:28 AM
+-- Host: localhost
+-- Generation Time: Apr 30, 2023 at 02:26 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -51,8 +51,8 @@ INSERT INTO `appointment` (`app_id`, `app_date`, `app_time`, `p_id`, `d_id`) VAL
 
 CREATE TABLE `comment` (
   `comment_id` int(11) NOT NULL,
-  `p_id` int(11) NOT NULL,
-  `d_id` int(11) NOT NULL,
+  `p_id` int(11) DEFAULT NULL,
+  `d_id` int(11) DEFAULT NULL,
   `post_id` int(11) NOT NULL,
   `comment_text` longtext NOT NULL,
   `comment_date` date NOT NULL,
@@ -77,16 +77,18 @@ CREATE TABLE `doctor` (
   `d_id` int(11) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
-  `h_id` int(11) NOT NULL
+  `h_id` int(11) NOT NULL,
+  `d_password` int(11) NOT NULL,
+  `d_email` varchar(254) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `doctor`
 --
 
-INSERT INTO `doctor` (`d_id`, `last_name`, `first_name`, `h_id`) VALUES
-(1, 'Williams', 'Riley ', 2),
-(2, 'Duncan', 'Arthur ', 1);
+INSERT INTO `doctor` (`d_id`, `last_name`, `first_name`, `h_id`, `d_password`, `d_email`) VALUES
+(1, 'Williams', 'Riley ', 2, 234, '145432@gmail.com'),
+(2, 'Duncan', 'Arthur ', 1, 2134, 'rewgfc@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -120,17 +122,19 @@ CREATE TABLE `patient` (
   `last_name` varchar(50) NOT NULL,
   `DOB` date NOT NULL,
   `h_id` int(11) NOT NULL,
-  `d_id` int(11) NOT NULL
+  `d_id` int(11) NOT NULL,
+  `p_password` int(11) NOT NULL,
+  `p_email` varchar(254) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `patient`
 --
 
-INSERT INTO `patient` (`p_id`, `first_name`, `last_name`, `DOB`, `h_id`, `d_id`) VALUES
-(1, 'Aiden ', 'Gardner', '1992-08-20', 1, 2),
-(2, 'Nathan ', 'Reynolds', '2000-10-12', 2, 2),
-(3, 'Ellis ', 'George', '1980-07-09', 1, 1);
+INSERT INTO `patient` (`p_id`, `first_name`, `last_name`, `DOB`, `h_id`, `d_id`, `p_password`, `p_email`) VALUES
+(1, 'Aiden ', 'Gardner', '1992-08-20', 1, 2, 123, '123456@gamil.com'),
+(2, 'Nathan ', 'Reynolds', '2000-10-12', 2, 2, 123, '1234@gamil.com'),
+(3, 'Ellis ', 'George', '1980-07-09', 1, 1, 123, '12345@gamil.com');
 
 -- --------------------------------------------------------
 
@@ -140,10 +144,10 @@ INSERT INTO `patient` (`p_id`, `first_name`, `last_name`, `DOB`, `h_id`, `d_id`)
 
 CREATE TABLE `post` (
   `post_id` int(11) NOT NULL,
-  `p_id` int(11) NOT NULL,
-  `d_id` int(11) NOT NULL,
+  `p_id` int(11) DEFAULT NULL,
+  `d_id` int(11) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
-  `body` longtext DEFAULT NULL,
+  `post_content` longtext DEFAULT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -151,9 +155,10 @@ CREATE TABLE `post` (
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`post_id`, `p_id`, `d_id`, `title`, `body`, `created_at`) VALUES
+INSERT INTO `post` (`post_id`, `p_id`, `d_id`, `title`, `post_content`, `created_at`) VALUES
 (1, 1, 1, 'headache', 'i am headach.i am headach.i am headach.i am headach.i am headach.i am headach.', '2023-04-14 08:24:45'),
-(2, 3, 2, 'I have a stomachache.', 'I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.', '2023-04-14 08:24:45');
+(2, 3, 2, 'I have a stomachache.', 'I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.', '2023-04-14 08:24:45'),
+(5, 1, 2, 'test 3', 'i hate csce 310', '2023-04-24 16:15:39');
 
 --
 -- Indexes for dumped tables
@@ -243,7 +248,7 @@ ALTER TABLE `patient`
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
