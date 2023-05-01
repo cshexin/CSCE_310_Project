@@ -68,21 +68,34 @@ a {
 }
 
 .buttons-container {
-  display: flex;
+  display:inline-flex;
 }
 
 .button-form {
-  margin-right: 100px; /* Adjust the space between buttons */
+  margin-right: 100px; 
 }
 
 .button {
-  background-color: #4CAF50; /* Adjust the background color */
-  color: rgb(255, 255, 255); /* Adjust the text color */
+  background-color: #4CAF50; 
+  color: rgb(255, 255, 255); 
   border: none;
-  padding: 5px 10px; /* Adjust the padding */
+  padding: 5px 10px; 
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
 }
+
+.edit-form {
+  margin-top: 10px;
+}
+  
+.edit-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
+  resize: vertical;
+}
+

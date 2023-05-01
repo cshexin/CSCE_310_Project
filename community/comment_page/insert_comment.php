@@ -8,7 +8,7 @@
             $stmt = mysqli_prepare($conn, "INSERT INTO comment (p_id, d_id, post_id, comment_text, comment_date, comment_time) VALUES (?, ?, ?, ?, ?, ?)");
             if ($stmt) {
             // Set default values for p_id and d_id
-            $default_p_id = 1;
+            $default_p_id = 2;
             $default_d_id = 1;
         
             // Get the current date and time

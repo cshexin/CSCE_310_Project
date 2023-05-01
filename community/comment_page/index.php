@@ -55,7 +55,7 @@
       <div class="post-card">
         <?php if (isset($currentPost['title'])) echo "<h1>" . htmlspecialchars($currentPost['title']) . "</h1>"; ?>
         <br>
-        <?php if (isset($currentPost['body'])) echo "<p>" . htmlspecialchars($currentPost['body']) . "</p>"; ?>
+        <?php if (isset($currentPost['post_content'])) echo "<p>" . htmlspecialchars($currentPost['post_content']) . "</p>"; ?>
       </div>
           
       <div class="create-post">
@@ -78,28 +78,35 @@
                 </p>
                 <?php 
                   if ($comment['p_id'] == $p_id && $comment['d_id'] == $d_id) {
-                    echo "<div class='buttons-container'>";
-                      //Edition
-                      echo "<form action='edit_comment.php' method='post'>";
-                      echo "<input type='hidden' name='comment_id' value='" . $comment['comment_id'] . "'>";
-                      echo "<input type='hidden' name='post_id' value='" . $post_id . "'>";
-                      echo "<input type='submit' name='edit' value='Edit'>";
-                      echo "</form>";
+                    echo "<div class='buttons-container'>";               
                       // Deletion
                       echo "<form action='delete_comment.php' method='post'>";
                       echo "<input type='hidden' name='comment_id' value='" . $comment['comment_id'] . "'>";
                       echo "<input type='hidden' name='post_id' value='" . $post_id . "'>";
                       echo "<input type='submit' name='delete' value='Delete'>";
                       echo "</form>";
+                      echo "<p> &nbsp; </p>";
+                      // Edit Button
+                      echo "<button onclick='toggleEditForm(" . $comment['comment_id'] . ")'>Edit</button>";
                     echo "</div>";
                   }
                 ?>
+                <!-- Edition-->
+                <div class="edit-form" id="edit-form-<?php echo $comment['comment_id']; ?>" style="display:none;">
+                    <form class="edit-comment-form" method="POST" action="update_comment.php">
+                        <input type="hidden" name="comment_id" value="<?php echo $comment['comment_id']; ?>">
+                        <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+                        <textarea name="comment_text" rows="4" cols="50" required><?php echo htmlspecialchars($comment['comment_text']); ?></textarea>
+                        <br>
+                        <input type="submit" name="update" value="Update Comment">
+                    </form>
+                </div>
             </div>
             </div>
         <?php } ?>
       </div>
   </div>
 
-  <script src="index.js"></script>
+  <script src="edit_comment.js"></script>
   </body>
 </html>
