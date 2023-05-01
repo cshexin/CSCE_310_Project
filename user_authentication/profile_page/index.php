@@ -43,5 +43,8 @@
     <div>
       <a href="edit.php">EDIT PROFILE</a>
     </div>
+    <div>
+      <a href="destroy.php">DELETE ACCOUNT</a>
+    </div>
   </body>
 </html>

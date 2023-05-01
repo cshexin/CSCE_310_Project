@@ -1,17 +1,40 @@
-
 <?php
-    // connect database
+
 include('../../config/db_connect.php');
 
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-} 
+if(!isset($_SESSION)) { session_start(); }
+
 $id = 0;
 $dob = $fname = $lname = $email = $password = "";
 $error = false;
 
-
+if (!isset($_SESSION["id"])) {
+    header("location: ../signin_page");
+} else {
+    $nameData = explode(" ", $_SESSION['name']);
+    $fname = $nameData[0];
+    $lname = $nameData[1];
+    $email = $_SESSION['email'];
+    $sql = "SELECT * FROM patient WHERE p_email = '$email' AND first_name = '$fname' AND last_name = '$lname'";
+    $stmt = mysqli_prepare($conn, $sql);
+    if (mysqli_stmt_execute($stmt)) {
+        $result = mysqli_stmt_get_result($stmt);
+        if (mysqli_num_rows($result) == 1) {
+            $row = mysqli_fetch_assoc($result);
+            $_SESSION["loggedin"] = true;
+            $_SESSION["id"] = $row['p_id'];
+            $id = $row['p_id'];
+            $_SESSION["name"] = $row['first_name'] . " " . $row['last_name'];
+            $_SESSION["email"] = $row['p_email'];
+            $dob = $_SESSION["dob"] = $row['DOB'];
+            $password = $_SESSION["password"] = $row['p_password'];
+        } else{
+            echo "Invalid information entered";
+        }
+    } else {
+        echo "Invalid information entered";
+    }
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(empty(trim($_POST["fname"]))){
@@ -37,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if(empty(trim($_POST["email"]))){
         $error = true;
-        $email = "Please enter a email.";
+        $email = "Please enter an email.";
     } else {
         $email = trim($_POST["email"]);
     }
@@ -50,38 +73,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if(!$error){
-        $sql = "UPDATE patient SET first_name = '$fname', last_name = '$lname', p_email = '$email', p_password = '$password', DOB = '$dob' WHERE id = '$id'";
+        echo $fname . " " . $lname . " " . $password . " " .  $email . " " . $id;
+        $sql = "UPDATE patient SET first_name = '$fname', last_name = '$lname', DOB = '$dob', p_password = $password, p_email = '$email' WHERE p_id = $id";
+        // TODO: ADD CHECK TO MAKE SURE EMAILS ARE NOT THE SAME
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_execute($stmt);
-        header("location: index.php");
-        exit;
-    }
-}
 
-if (!isset($_SESSION["name"])) {
-    header("location: ../signin_page");
-} else {
-    $nameData = explode(" ", $_SESSION['name']);
-    $fname = $nameData[0];
-    $lname = $nameData[1];
-    $email = $_SESSION['email'];
-    $sql = "SELECT * FROM patient WHERE p_email = '$email' AND first_name = '$fname' AND last_name = '$lname'";
-    $stmt = mysqli_prepare($conn, $sql);
-    if (mysqli_stmt_execute($stmt)) {
-        $result = mysqli_stmt_get_result($stmt);
-        if (mysqli_num_rows($result) == 1) {
-            $row = mysqli_fetch_assoc($result);
-            $_SESSION["loggedin"] = true;
-            $id = $_SESSION["id"] = $row['p_id'];
-            $_SESSION["name"] = $row['first_name'] . " " . $row['last_name'];
-            $_SESSION["email"] = $row['p_email'];
-            $dob = $_SESSION["dob"] = $row['DOB'];
-            $password = $_SESSION["password"] = $row['p_password'];
-        } else{
-            echo "Invalid information entered";
+        if (mysqli_stmt_affected_rows($stmt) != 1){
+            echo "Query didn't go through";
+        } else {
+            $_SESSION["name"] = $fname . " " . $lname;
+            $_SESSION["email"] = $email;
+            $_SESSION["dob"] = $dob;
+            $_SESSION["password"] = $password;
+    
+            header("location: index.php");
+            exit;
         }
-    } else {
-        echo "Invalid information entered";
     }
 }
 

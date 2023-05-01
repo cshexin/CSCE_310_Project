@@ -13,6 +13,8 @@ session_start();
 $dob = $fname = $lname = $email = $password = "";
 $error = false;
 
+// TODO: ADD BETTER ERROR CHECKING
+
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if(empty(trim($_POST["fname"]))){

@@ -16,6 +16,9 @@ if(isset($_SESSION["name"])){
 $dob = $fname = $lname = $email = $password = "";
 $error = false;
 
+// TODO: ADD BETTER ERROR CHECKING
+// TODO: SUPPORT DOCTOR VS PATIENT LOG IN
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(empty(trim($_POST["fname"]))){
         $error = true;
