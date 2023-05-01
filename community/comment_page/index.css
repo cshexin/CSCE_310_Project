@@ -67,9 +67,10 @@ a {
     color: #0077b6;
 }
 
-.buttons-container {
+/* .buttons-container {
   display:inline-flex;
-}
+  height:inherit;
+} */
 
 .button-form {
   margin-right: 100px; 
@@ -87,15 +88,13 @@ a {
   cursor: pointer;
 }
 
-.edit-form {
-  margin-top: 10px;
-}
+
   
-.edit-form textarea {
-  width: 100%;
-  box-sizing: border-box;
-  font-family: inherit;
-  font-size: inherit;
-  resize: vertical;
+.delete-form {
+  display: inline-block;
 }
 
+.edit-button {
+  margin: 10px;
+  display: inline-block;
+}

@@ -80,14 +80,14 @@
                   if ($comment['p_id'] == $p_id && $comment['d_id'] == $d_id) {
                     echo "<div class='buttons-container'>";               
                       // Deletion
-                      echo "<form action='delete_comment.php' method='post'>";
+                      echo "<form class='delete-form' action='delete_comment.php' method='post'>";
                       echo "<input type='hidden' name='comment_id' value='" . $comment['comment_id'] . "'>";
                       echo "<input type='hidden' name='post_id' value='" . $post_id . "'>";
                       echo "<input type='submit' name='delete' value='Delete'>";
                       echo "</form>";
-                      echo "<p> &nbsp; </p>";
+
                       // Edit Button
-                      echo "<button onclick='toggleEditForm(" . $comment['comment_id'] . ")'>Edit</button>";
+                      echo "<button class='edit-button' onclick='toggleEditForm(" . $comment['comment_id'] . ")'>Edit</button>";
                     echo "</div>";
                   }
                 ?>
