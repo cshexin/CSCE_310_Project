@@ -16,22 +16,33 @@
       }
       
       $post_id = $_GET['postid'];
-      $p_id = 1; //hard code
+      $p_id = null; //hard code
       $d_id = 1; //hard code
-      // Write query for all posts
+      $is_doctor = false;
+      // Write query
       $sql = "SELECT * FROM comment WHERE post_id = $post_id";
       $currentPostsql = "SELECT * FROM post WHERE post_id = $post_id";
+      if ($p_id !== null) {
+        $usersql = "SELECT * FROM patient WHERE p_id = $p_id";
+      } else {
+        $usersql = "SELECT * FROM doctor WHERE d_id = $d_id";
+        $is_doctor = true;
+      }
+
 
       // make query & get result
       $result = mysqli_query($conn, $sql);
       $currentPostResult = mysqli_query($conn, $currentPostsql);
+      $userresult = mysqli_query($conn, $usersql);
 
       // fetch the resulting rows as an array
       $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $currentPost = mysqli_fetch_assoc($currentPostResult);
-      
+      $user = mysqli_fetch_assoc($userresult);
+
       mysqli_free_result($result);
       mysqli_free_result($currentPostResult);
+      mysqli_free_result($userresult);
       // close connection
       mysqli_close($conn);
       
@@ -71,6 +82,13 @@
         <?php foreach($comments as $comment){ ?>
             <div class="post-card">
             <div class="card-content">
+                <?php
+                  if ($comment['p_id'] == null) {
+                    echo "<p> <span class='comment-user'> Dr." . htmlspecialchars($comment['d_id']) .": </span> <p>";
+                  } else {
+                    echo "<p> <span class='comment-user'>" . htmlspecialchars($comment['p_id']) .": </span> <p>";
+                  }
+                ?>
                 <p><?php echo htmlspecialchars($comment['comment_text']); ?></p>
                 <p>
                   <?php echo "<span class='comment-meta'>Comment at " . html_entity_decode($comment['comment_time']) . "</span>"; ?>
