@@ -3,7 +3,7 @@
     // connect to database
     include("../../config/db_connect.php");
     // replace when integrating
-    $_SESSION['user'] = false;
+    $_SESSION['user'] = true;
     // boolean variable to know if user is a patient or a doctor
     $patientUser = $_SESSION['user'];
 
