@@ -25,7 +25,7 @@ if(!isset($_SESSION["id"])){
 <body>
     <nav>
         <div class="navbar-items">
-            <a class="nav-item" href="#">Profile</a>
+            <a class="nav-item" href="/CSCE_310_Project/user_authentication/profile_page">Profile</a>
             <a class="nav-item" href="#">Community</a>
         </div>
 

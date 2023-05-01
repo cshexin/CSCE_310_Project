@@ -16,7 +16,9 @@
       $fname = $nameData[0];
       $lname = $nameData[1];
       $email = $_SESSION['email'];
-
+      if ($_SESSION['isPatient']){
+        $dob = $_SESSION['dob'];
+      }
     }
 ?>
 
@@ -25,7 +27,6 @@
 <html>
   <head>
     <title>Profile Page</title>
-    <!-- <link rel="stylesheet" type="text/css" href="index.css"> -->
     <?php include('../../header/header.php'); ?>
     
     <div class="container">
@@ -39,6 +40,11 @@
         <p>
           Email: <?php echo $email?>
         </p>
+        <?php if ($_SESSION['isPatient']) { ?>
+          <p>
+          Date Of Birth: <?php echo $dob?>
+          </p>
+	    <?php } ?>
     </div>
     <div>
       <a href="edit.php">EDIT PROFILE</a>
