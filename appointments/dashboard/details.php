@@ -143,14 +143,14 @@
                         <br><br>
                         <label for="patient_name"> Patient Name:</label>
                         <input type="text" id="pname" name="pname" value="<?php echo $patientName; ?>" readonly>
-                        <div hidden="hidden" id="showpatientlist">
+                        <span hidden="hidden" id="showpatientlist">
                             <input list="pnames" id="pname" name="pname">
                             <datalist id="pnames">
                                 <?php foreach($datalist as $patient): ?>
                                     <option value="<?php echo $patient[0] . "," . $patient[1] . "" .  $patient[2]; ?>">
                                 <?php endforeach; ?>
                             </datalist>
-                        </div>
+                        </span>
                         <br><br>
                     <?php endif; ?>
                     <label for="meeting-time"> Time: </label>
