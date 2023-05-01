@@ -42,7 +42,7 @@
         } else {
             $sqlupdate = "UPDATE appointment SET app_date = '$app_date', app_time = '$app_time', p_id = '$p_id' WHERE app_id = $id_to_modify";
         }
-        
+
         if(mysqli_query($conn, $sqlupdate)){
             // success
             header("Location: index.php");
@@ -125,14 +125,14 @@
                     <?php if($patientUser === true): ?>
                         <label for="doctor_name"> Doctor Name: </label>
                         <input type="text" id="dname" name="dname" value="<?php echo $doctorName ?>" readonly>
-                        <div hidden="hidden" id="showdoctorlist">
+                        <span hidden="hidden" id="showdoctorlist">
                             <input list="dnames" id="dname" name="dname">
                             <datalist id = "dnames">
                                 <?php foreach($datalist as $doctor): ?>
                                     <option value="<?php echo $doctor[0] . "," . $doctor[1] . "" .  $doctor[2]; ?>">
                                 <?php endforeach; ?>
                             </datalist>
-                        </div>
+                        </span>
                         <br><br>
                         <label for="patient_name"> Patient Name: </label>
                         <input type="text" id="pname" name="pname" value="<?php echo $patientName; ?>" readonly>
