@@ -44,7 +44,10 @@
       <a href="edit.php">EDIT PROFILE</a>
     </div>
     <div>
-      <a href="destroy.php">DELETE ACCOUNT</a>
+      <form method="post" action="destroy.php">
+        <input type="hidden" name="confirm_delete" value="true">
+        <button type="submit" name="delete" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">DELETE ACCOUNT</button>
+      </form> 
     </div>
   </body>
 </html>
