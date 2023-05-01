@@ -1,28 +1,41 @@
 <?php
-
+    session_start();
     // connect to database
     include("../../config/db_connect.php");
     // replace when integrating
-    $patientid = 1;
+    $_SESSION['user'] = false;
+    // boolean variable to know if user is a patient or a doctor
+    $patientUser = $_SESSION['user'];
+
+    if($patientUser === true){
+        $userid = 1; // patient user: Aiden Gardner
+    } else {
+        $userid = 1; // doctor user: Williams Riley
+    }
 
     // wrtite query for patients
-    $sql = "SELECT * FROM appointment WHERE p_id = $patientid";
-    $sqlpatient = "SELECT first_name, last_name FROM patient WHERE p_id = $patientid";
+    if($patientUser === true){
+        $sql = "SELECT * FROM appointment WHERE p_id = $userid";
+        $sqluser = "SELECT first_name, last_name FROM patient WHERE p_id = $userid";
+    } else { // or write query for doctors
+        $sql = "SELECT * FROM appointment WHERE d_id = $userid";
+        $sqluser = "SELECT first_name, last_name FROM doctor WHERE d_id = $userid";
+    }
     // make query & get result
     $result = mysqli_query($conn, $sql);
-    $resultPatient = mysqli_query($conn, $sqlpatient);
+    $resultuser = mysqli_query($conn, $sqluser);
 
     // fetch the resulting rows as an array
     $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    $datapatient = mysqli_fetch_all($resultPatient, MYSQLI_ASSOC);
+    $datauser = mysqli_fetch_all($resultuser, MYSQLI_ASSOC);
 
     // free result from memory
     mysqli_free_result($result);
-    mysqli_free_result($resultPatient);
+    mysqli_free_result($resultuser);
 
     mysqli_close($conn);
-    // get the first and last name of patient
-    $patientName = $datapatient[0]['first_name'] . ''. $datapatient[0]['last_name'];
+    // get the first and last name of user
+    $userName = $datauser[0]['first_name'] . ''. $datauser[0]['last_name'];
     $cssFile = 'index.css';
     $cssContent = file_get_contents($cssFile);
     $hash = md5($cssContent);
@@ -37,11 +50,11 @@
     </head>
     <body>
         <?php include('../../header/header.php'); ?>
-        <h1>Dashboard</h1>
+        <h1 id="dashboard">Dashboard</h1>
         <div id="dashboard-title">
-            <h3> Hello, <?php echo $patientName;?></h3>
+            <h3> Hello, <?php echo $userName;?></h3>
             <form action="create.php" method="post">
-                <button type="input" id="add_app" name="add_app" value='<?php echo $patientid; ?>'>
+                <button type="input" id="add_app" name="add_app" value='<?php echo $userid; ?>'>
                     <p>Schedule an Appointment<p>
                 </button>
             </form>
@@ -50,7 +63,7 @@
             <?php foreach($data as $d): ?>
             <div>
                 <a href="details.php?id=<?php echo $d['app_id']?>">
-                    <button type="button">
+                    <button type="button" id="appointment-button">
                         Appointment
                     </button>
                 </a>
