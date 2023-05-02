@@ -21,20 +21,17 @@ if(!isset($_SESSION["id"])){
  
     <link rel="stylesheet" type="text/css" href="../../header/header.css">
 </head>
-
 <body>
     <nav>
         <div class="navbar-items">
             <a class="nav-item" href="/CSCE_310_Project/user_authentication/profile_page">Profile</a>
-            <a class="nav-item" href="#">Community</a>
+            <a class="nav-item" href="/csce_310_project/community/post_page">Community</a>
         </div>
-
         <a class="web-title" href="#">Howdy Healthy</a>
         
         <div class="navbar-items">
-            <a class="nav-item" href="#">Appointment</a>
-
-            <a class="nav-item" href="/CSCE_310_Project/user_authentication/signin_page/logout.php">Log out</a>
+            <a class="nav-item" href="../../appointments/dashboard">Appointment</a>
+            <a class="nav-item" href="/CSCE_310_Project/user_authentication/signin_page/logout.php">Logout</a>
         </div>
     </nav>
 

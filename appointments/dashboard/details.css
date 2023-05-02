@@ -1,0 +1,39 @@
+#detail {
+    background-color: #ffff;
+    padding-left: 100px;
+    padding-bottom: 80px;
+    padding-top: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+}
+
+#editButton {
+    width: 70px;
+    height: 50px;
+}
+
+#editButton:hover {
+    background-color: #5a0606;
+    color: white
+}
+
+#submitButton {
+    width: 70px;
+    height: 50px;
+}
+
+#submitButton:hover {
+    background-color: #5a0606;
+    color: white
+}
+
+#cancelButton {
+    width: 70px;
+    height: 50px;
+}
+
+#cancelButton:hover {
+    background-color: #5a0606;
+    color: white
+}
