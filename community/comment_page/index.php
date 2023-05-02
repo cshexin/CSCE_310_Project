@@ -16,21 +16,33 @@
       }
       
       $post_id = $_GET['postid'];
-
-      // Write query for all posts
+      $p_id = null; //hard code
+      $d_id = 1; //hard code
+      $is_doctor = false;
+      // Write query
       $sql = "SELECT * FROM comment WHERE post_id = $post_id";
       $currentPostsql = "SELECT * FROM post WHERE post_id = $post_id";
+      if ($p_id !== null) {
+        $usersql = "SELECT * FROM patient WHERE p_id = $p_id";
+      } else {
+        $usersql = "SELECT * FROM doctor WHERE d_id = $d_id";
+        $is_doctor = true;
+      }
+
 
       // make query & get result
       $result = mysqli_query($conn, $sql);
       $currentPostResult = mysqli_query($conn, $currentPostsql);
+      $userresult = mysqli_query($conn, $usersql);
 
       // fetch the resulting rows as an array
       $comments = mysqli_fetch_all($result, MYSQLI_ASSOC);
       $currentPost = mysqli_fetch_assoc($currentPostResult);
-      
+      $user = mysqli_fetch_assoc($userresult);
+
       mysqli_free_result($result);
       mysqli_free_result($currentPostResult);
+      mysqli_free_result($userresult);
       // close connection
       mysqli_close($conn);
       
@@ -52,12 +64,13 @@
 
   <div class="container"> 
       <div class="post-card">
-        <?php echo "<h1>" . htmlspecialchars($currentPost['title']) . "</h1>"; ?>
+        <?php if (isset($currentPost['title'])) echo "<h1>" . htmlspecialchars($currentPost['title']) . "</h1>"; ?>
         <br>
-        <?php echo "<p>" . htmlspecialchars($currentPost['body']) . "</p>"; ?>
+        <?php if (isset($currentPost['post_content'])) echo "<p>" . htmlspecialchars($currentPost['post_content']) . "</p>"; ?>
       </div>
           
       <div class="create-post">
+        <!-- Insertion -->
         <form action="insert_comment.php" method="POST">            
           <input id="input" type="text" name="comment" placeholder="Create Comment" required>
           <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
@@ -69,17 +82,49 @@
         <?php foreach($comments as $comment){ ?>
             <div class="post-card">
             <div class="card-content">
+                <?php
+                  if ($comment['p_id'] == null) {
+                    echo "<p> <span class='comment-user'> Dr." . htmlspecialchars($comment['d_id']) .": </span> <p>";
+                  } else {
+                    echo "<p> <span class='comment-user'>" . htmlspecialchars($comment['p_id']) .": </span> <p>";
+                  }
+                ?>
                 <p><?php echo htmlspecialchars($comment['comment_text']); ?></p>
                 <p>
-                    <?php echo html_entity_decode($comment['comment_time']); ?>
-                    <?php echo html_entity_decode($comment['comment_date']); ?> 
+                  <?php echo "<span class='comment-meta'>Comment at " . html_entity_decode($comment['comment_time']) . "</span>"; ?>
+                  <?php echo "<span class='comment-meta'>on " . html_entity_decode($comment['comment_date']) . "</span>"; ?>
                 </p>
+                <?php 
+                  if ($comment['p_id'] == $p_id && $comment['d_id'] == $d_id) {
+                    echo "<div class='buttons-container'>";               
+                      // Deletion
+                      echo "<form class='delete-form' action='delete_comment.php' method='post'>";
+                      echo "<input type='hidden' name='comment_id' value='" . $comment['comment_id'] . "'>";
+                      echo "<input type='hidden' name='post_id' value='" . $post_id . "'>";
+                      echo "<input type='submit' name='delete' value='Delete'>";
+                      echo "</form>";
+
+                      // Edit Button
+                      echo "<button class='edit-button' onclick='toggleEditForm(" . $comment['comment_id'] . ")'>Edit</button>";
+                    echo "</div>";
+                  }
+                ?>
+                <!-- Edition-->
+                <div class="edit-form" id="edit-form-<?php echo $comment['comment_id']; ?>" style="display:none;">
+                    <form class="edit-comment-form" method="POST" action="update_comment.php">
+                        <input type="hidden" name="comment_id" value="<?php echo $comment['comment_id']; ?>">
+                        <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+                        <textarea name="comment_text" rows="4" cols="50" required><?php echo htmlspecialchars($comment['comment_text']); ?></textarea>
+                        <br>
+                        <input type="submit" name="update" value="Update Comment">
+                    </form>
+                </div>
             </div>
             </div>
         <?php } ?>
       </div>
   </div>
 
-  <script src="index.js"></script>
+  <script src="edit_comment.js"></script>
   </body>
 </html>

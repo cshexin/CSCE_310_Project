@@ -66,3 +66,40 @@ a {
 .card-link:hover .detail-btn {
     color: #0077b6;
 }
+
+/* .buttons-container {
+  display:inline-flex;
+  height:inherit;
+} */
+
+.button-form {
+  margin-right: 100px; 
+}
+
+.button {
+  background-color: #4CAF50; 
+  color: rgb(255, 255, 255); 
+  border: none;
+  padding: 5px 10px; 
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.comment-meta {
+    font-style: italic;
+    font-size: 12px;
+    margin-right: 5px;
+    color: #5a0606;
+}  
+  
+.delete-form {
+  display: inline-block;
+}
+
+.edit-button {
+  margin: 10px;
+  display: inline-block;
+}
