@@ -3,14 +3,20 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
             $comment_text = $_POST['comment'];
             $post_id = $_POST['post_id'];
+            $isPatient = $_POST['is_Patient'];
+            // Set default values for p_id and d_id
+            $default_p_id = null;
+            $default_d_id = 1;
+
+            if($isPatient){
+                $default_p_id = $_POST['p_id'];
+            } else {
+                $default_d_id = $_POST['d_id'];
+            }
             
             // Prepare an SQL statement for inserting the comment
             $stmt = mysqli_prepare($conn, "INSERT INTO comment (p_id, d_id, post_id, comment_text, comment_date, comment_time) VALUES (?, ?, ?, ?, ?, ?)");
             if ($stmt) {
-            // Set default values for p_id and d_id
-            $default_p_id = 1;
-            $default_d_id = 1;
-        
             // Get the current date and time
             $current_date = date('Y-m-d');
             $current_time = date('H:i:s');
