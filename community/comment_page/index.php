@@ -49,9 +49,6 @@
       } else {
         $d_id = $id;
       }
-      echo ' with p_id: ' . $p_id;
-      echo ' with d_id: ' . $d_id;
-
       // Write query
       $sql = "SELECT * FROM comment WHERE post_id = $post_id";
       $currentPostsql = "SELECT * FROM post WHERE post_id = $post_id";
