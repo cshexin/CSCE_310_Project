@@ -10,13 +10,29 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
+  if(!isset($_SESSION)){
+    session_start();
+  }
+
+  $sql = "";
+  $last_name;
+  $first_name;
+  
+  if ($_SESSION["isPatient"]){
+    $sql = "SELECT * FROM patient WHERE p_email = '$email' AND first_name = '$fname' AND last_name = '$lname'";
+    echo 'patient';
+  } else{
+    echo 'doctor';
+  }
+
+
 
 
     // Write query for all posts
-    $sql = 'SELECT * FROM post';
+    $sql_post = 'SELECT * FROM post';
 
     // make query & get result
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($conn, $sql_post);
 
     // fetch the resulting rows as an array
     $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
