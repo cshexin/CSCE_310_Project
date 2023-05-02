@@ -61,6 +61,10 @@ if (isset($_POST) && !empty($_POST)) {
     }
 
     $sql = "";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c0009500589e4772e976d8aef026407b34e1cdf
     if(!$error){
         if ($_SESSION["isPatient"]){
             $sql = "SELECT * FROM patient WHERE p_email = '$email' AND first_name = '$fname' AND last_name = '$lname'";

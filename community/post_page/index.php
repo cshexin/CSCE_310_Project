@@ -10,22 +10,41 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
+  if(!isset($_SESSION)){
+    session_start();
+  }
+
+  // SESSION
+  $sql = "";
+  $curr_username = $_SESSION["name"];
+  $curr_user_id = $_SESSION["id"];
+  
+  // Split user name into first and last name
+  $nameArray = explode(' ', $curr_username);
+  $firstName = $nameArray[0];
+  $lastName = $nameArray[1];
+  
+  if ($_SESSION["isPatient"]){
+    $sql = "SELECT * FROM patient WHERE  first_name = '$firstName' AND last_name = '$lastName'";
+    echo 'patient: ' . $curr_username;
+  } else{
+    $sql = "SELECT * FROM patient WHERE  first_name = '$firstName' AND last_name = '$lastName'";
+    echo 'doctor: ' . $curr_username;
+  }
+
+
 
 
     // Write query for all posts
-    $sql = 'SELECT * FROM post';
+    $sql_post = 'SELECT * FROM post';
 
     // make query & get result
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($conn, $sql_post);
 
     // fetch the resulting rows as an array
     $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
     
     mysqli_free_result($result);
-
-    // close connection
-    mysqli_close($conn);
-
 ?>
 
 
@@ -48,7 +67,11 @@
       </form>
 
       <div class="post-container">
-        <?php foreach($posts as $post){ ?>
+        <?php foreach($posts as $post){
+            $user_id = $post['p_id'];
+            $user_query = "SELECT first_name, last_name FROM patient WHERE p_id = $user_id";
+            $user_result = mysqli_query($conn, $user_query);
+            $username = mysqli_fetch_assoc($user_result); ?>
             <div class="post-card" id="post-<?php echo $post['post_id']; ?>">
                 <div class="card-content">
                   <h3>
@@ -56,12 +79,12 @@
                       <?php echo htmlspecialchars($post['title']); ?>
                     </a>
                   </h3>
-                  <h6>Posted by <?php echo $post['p_id']; ?></h6>
+                  <h6>Posted by <?php echo $username['first_name'] . ' ' . $username['last_name']; ?></h6>
                   <h6>Posted by <?php echo $post['created_at']; ?></h6>
                   <p><?php echo html_entity_decode($post['post_content']); ?></p>
 
                   <div class="post-options">
-                      <?php if ($post['p_id'] == 1) {?>
+                      <?php if ($post['p_id'] == $curr_user_id) {?>
                         <button class="edit-btn"  onclick="showEditForm(<?php echo $post['post_id']; ?>)">Edit</button>
                         <form method="POST" action="./delete.php" class="delete-btn-form">
                             <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
