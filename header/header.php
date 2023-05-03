@@ -25,12 +25,12 @@ if(!isset($_SESSION["id"])){
     <nav>
         <div class="navbar-items">
             <a class="nav-item" href="/CSCE_310_Project/user_authentication/profile_page">Profile</a>
-            <a class="nav-item" href="/csce_310_project/community/post_page">Community</a>
+            <a class="nav-item" href="/CSCE_310_Project/community/post_page">Community</a>
         </div>
-        <a class="web-title" href="#">Howdy Healthy</a>
+        <a class="web-title" href="/CSCE_310_Project/appointments/dashboard">Howdy Healthy</a>
         
         <div class="navbar-items">
-            <a class="nav-item" href="../../appointments/dashboard">Appointment</a>
+            <a class="nav-item" href="/CSCE_310_Project/appointments/dashboard">Appointment</a>
             <a class="nav-item" href="/CSCE_310_Project/user_authentication/signin_page/logout.php">Logout</a>
         </div>
     </nav>
