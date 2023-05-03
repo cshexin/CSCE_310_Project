@@ -3,7 +3,7 @@
     include("../../config/db_connect.php");
     
     // boolean variable to know if user is a patient or a doctor
-    $patientUser = $_SESSION['user'];
+    $patientUser = $_SESSION['isPatient'];
 
     if(isset($_POST['delete'])){
         $id_to_modify = mysqli_real_escape_string($conn, $_POST['id_to_modify']);
