@@ -59,10 +59,18 @@
         $is_doctor = true;
       }
 
+      if ($p_id !== null) {
+        $usersql = "SELECT * FROM patient WHERE p_id = $p_id";
+      } else {
+        $usersql = "SELECT * FROM doctor WHERE d_id = $d_id";
+        $is_doctor = true;
+      }
+
 
       // make query & get result
       $result = mysqli_query($conn, $sql);
       $currentPostResult = mysqli_query($conn, $currentPostsql);
+      $userresult = mysqli_query($conn, $usersql);
       $userresult = mysqli_query($conn, $usersql);
 
       // fetch the resulting rows as an array
@@ -70,8 +78,11 @@
       $currentPost = mysqli_fetch_assoc($currentPostResult);
       $user = mysqli_fetch_assoc($userresult);
 
+      $user = mysqli_fetch_assoc($userresult);
+
       mysqli_free_result($result);
       mysqli_free_result($currentPostResult);
+      mysqli_free_result($userresult);
       mysqli_free_result($userresult);
 ?>
 
@@ -79,6 +90,12 @@
 <html>
   <head>
     <title>Comment</title>
+    <?php
+      $cssFile = 'index.css';
+      $cssContent = file_get_contents($cssFile);
+      $hash = md5($cssContent); 
+    ?>
+     <link rel="stylesheet" type="text/css" href="index.css?version=<?php echo $hash; ?>">
     <?php
       $cssFile = 'index.css';
       $cssContent = file_get_contents($cssFile);
@@ -96,7 +113,30 @@
         <?php if (isset($currentPost['post_content'])) echo "<p>" . htmlspecialchars($currentPost['post_content']) . "</p>"; ?>
       </div>
           
+  <?php include('../../header/header.php'); ?>
+
+  <div class="container"> 
+      <div class="post-card">
+        <?php if (isset($currentPost['title'])) echo "<h1>" . htmlspecialchars($currentPost['title']) . "</h1>"; ?>
+        <br>
+        <?php if (isset($currentPost['post_content'])) echo "<p>" . htmlspecialchars($currentPost['post_content']) . "</p>"; ?>
+      </div>
+          
       <div class="create-post">
+        <!-- Insertion -->
+        <form action="insert_comment.php" method="POST">            
+          <input id="input" type="text" name="comment" placeholder="Create Comment" required>
+          <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+          <?php
+            if ($isPatient) {
+              echo '<input type="hidden" name="p_id" value="' . $p_id . '">';
+            } else {
+              echo '<input type="hidden" name="d_id" value="' . $d_id . '">';
+            }
+          ?>
+          <input type="hidden" name="is_Patient" value="<?php echo $isPatient; ?>">
+          <input type="submit" name="submit" value="Submit Comment">
+        </form>
         <!-- Insertion -->
         <form action="insert_comment.php" method="POST">            
           <input id="input" type="text" name="comment" placeholder="Create Comment" required>
@@ -173,6 +213,14 @@
             </div>
             </div>
         <?php } ?>
+      </div>
+  </div>
+
+  <?php
+  // close connection
+  mysqli_close($conn);
+  ?>
+  <script src="edit_comment.js"></script>
       </div>
   </div>
 

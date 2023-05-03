@@ -38,10 +38,18 @@
 
     // Write query for all posts
     $sql_post = 'SELECT * FROM post';
+    // Write query for all posts
+    $sql_post = 'SELECT * FROM post';
 
     // make query & get result
     $result = mysqli_query($conn, $sql_post);
+    // make query & get result
+    $result = mysqli_query($conn, $sql_post);
 
+    // fetch the resulting rows as an array
+    $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    
+    mysqli_free_result($result);
     // fetch the resulting rows as an array
     $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
     
