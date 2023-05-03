@@ -6,7 +6,7 @@
     // recieves the id of the user
     $createUserId = $_POST['add_app'];
     // boolean variable to know if user is a patient or a doctor
-    $patientUser = $_SESSION['user'];
+    $patientUser = $_SESSION['isPatient'];
 
     // wrtite query for patients
     if($patientUser === true){
