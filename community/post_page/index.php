@@ -19,7 +19,7 @@
     }
 
     ///// Retrive current user's information from the SESSION /////
-    $sql = "";
+    $sql_currUser = "";
     $curr_username = $_SESSION["name"];
     $curr_user_id = $_SESSION["id"];
   
@@ -30,11 +30,9 @@
 
     // Display current user's information with name and user type
     if ($_SESSION["isPatient"]){
-        $sql = "SELECT * FROM patient WHERE  first_name = '$firstName' AND last_name = '$lastName'";
-        echo 'patient: ' . $curr_username;
+        $sql_currUser = "SELECT * FROM patient WHERE  first_name = '$firstName' AND last_name = '$lastName'";
     } else{
-        $sql = "SELECT * FROM doctor WHERE  first_name = '$firstName' AND last_name = '$lastName'";
-        echo 'doctor: ' . $curr_username;
+        $sql_currUser = "SELECT * FROM doctor WHERE  first_name = '$firstName' AND last_name = '$lastName'";
     }
 
 
@@ -61,7 +59,15 @@
 
     <!-- Container for all content -->
     <div class="container">
-    <h1>Community Page</h1>
+        <h1>Community Page</h1>
+        
+        <!--Showing the current user information -->
+        <?php if($_SESSION["isPatient"]) {
+        echo 'Welcome patient: ' . $curr_username . '!';
+        }else{
+        echo 'Welcome doctor: ' . $curr_username . '!';
+        } ?>
+
         <!-- Area of creating post -->
         <form method="post" action="./create.php" class="create-post">
             <input id="title-input" type="text" placeholder="Create Title" name="title">
@@ -75,11 +81,7 @@
         <div class="post-container">
             <?php foreach($posts as $post){
 
-                // Retrieve each post's username and created time
-                // $is_Patient = false;
-                // $doc_id = NULL;
-                // $pat_id = NULL;
-
+                // Retrieve user name for each post
                 if($post['p_id'] != NULL){
                     $user_id = $post['p_id'];
                     $user_query = "SELECT first_name, last_name FROM patient WHERE p_id = $user_id";
@@ -144,7 +146,6 @@
                 </div>
             <?php } ?>
         </div>
-
     </div>
   </body>
 </html>
