@@ -2,16 +2,10 @@
     session_start();
     // connect to database
     include("../../config/db_connect.php");
-    // replace when integrating
-    $_SESSION['user'] = true;
     // boolean variable to know if user is a patient or a doctor
-    $patientUser = $_SESSION['user'];
+    $patientUser = $_SESSION['isPatient'];
 
-    if($patientUser === true){
-        $userid = 1; // patient user: Aiden Gardner
-    } else {
-        $userid = 1; // doctor user: Williams Riley
-    }
+    $userid = $_SESSION['id'];
 
     // wrtite query for patients
     if($patientUser === true){
