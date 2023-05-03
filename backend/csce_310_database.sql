@@ -1,13 +1,9 @@
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
--- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2023 at 01:48 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
--- Generation Time: Apr 22, 2023 at 01:48 AM
+-- Generation Time: Apr 30, 2023 at 02:26 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -47,14 +43,6 @@ INSERT INTO `appointment` (`app_id`, `app_date`, `app_time`, `p_id`, `d_id`) VAL
 (1, '2023-04-03', '14:00:00', 1, 2),
 (2, '2023-04-25', '08:20:00', 3, 1);
 
---
--- Dumping data for table `appointment`
---
-
-INSERT INTO `appointment` (`app_id`, `app_date`, `app_time`, `p_id`, `d_id`) VALUES
-(1, '2023-04-03', '14:00:00', 1, 2),
-(2, '2023-04-25', '08:20:00', 3, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -65,21 +53,11 @@ CREATE TABLE `comment` (
   `comment_id` int(11) NOT NULL,
   `p_id` int(11) DEFAULT NULL,
   `d_id` int(11) DEFAULT NULL,
-  `p_id` int(11) DEFAULT NULL,
-  `d_id` int(11) DEFAULT NULL,
   `post_id` int(11) NOT NULL,
   `comment_text` longtext NOT NULL,
   `comment_date` date NOT NULL,
   `comment_time` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `comment`
---
-
-INSERT INTO `comment` (`comment_id`, `p_id`, `d_id`, `post_id`, `comment_text`, `comment_date`, `comment_time`) VALUES
-(1, 3, 2, 1, 'why?why?why?why?why?why?why?why?why?', '2023-04-14', '03:27:05'),
-(2, 1, 1, 2, 'hahahahahahaha', '2023-04-14', '03:27:05');
 
 --
 -- Dumping data for table `comment`
@@ -99,9 +77,6 @@ CREATE TABLE `doctor` (
   `d_id` int(11) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
-  `h_id` int(11) NOT NULL,
-  `d_password` int(11) NOT NULL,
-  `d_email` varchar(254) NOT NULL
   `h_id` int(11) NOT NULL,
   `d_password` int(11) NOT NULL,
   `d_email` varchar(254) NOT NULL
@@ -135,14 +110,6 @@ INSERT INTO `hospital` (`h_id`, `h_name`, `h_location`) VALUES
 (1, 'West Valley Medical Center', '468 Edgewood Avenue, Saint Petersburg, FL 33702'),
 (2, 'Bayhealth Medical Clinic', '78 Smoky Hollow St., Jamaica Plain, MA 02130');
 
---
--- Dumping data for table `hospital`
---
-
-INSERT INTO `hospital` (`h_id`, `h_name`, `h_location`) VALUES
-(1, 'West Valley Medical Center', '468 Edgewood Avenue, Saint Petersburg, FL 33702'),
-(2, 'Bayhealth Medical Clinic', '78 Smoky Hollow St., Jamaica Plain, MA 02130');
-
 -- --------------------------------------------------------
 
 --
@@ -158,19 +125,7 @@ CREATE TABLE `patient` (
   `d_id` int(11) NOT NULL,
   `p_password` int(11) NOT NULL,
   `p_email` varchar(254) NOT NULL
-  `d_id` int(11) NOT NULL,
-  `p_password` int(11) NOT NULL,
-  `p_email` varchar(254) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `patient`
---
-
-INSERT INTO `patient` (`p_id`, `first_name`, `last_name`, `DOB`, `h_id`, `d_id`, `p_password`, `p_email`) VALUES
-(1, 'Aiden ', 'Gardner', '1992-08-20', 1, 2, 123, '123456@gamil.com'),
-(2, 'Nathan ', 'Reynolds', '2000-10-12', 2, 2, 123, '1234@gamil.com'),
-(3, 'Ellis ', 'George', '1980-07-09', 1, 1, 123, '12345@gamil.com');
 
 --
 -- Dumping data for table `patient`
@@ -191,10 +146,8 @@ CREATE TABLE `post` (
   `post_id` int(11) NOT NULL,
   `p_id` int(11) DEFAULT NULL,
   `d_id` int(11) DEFAULT NULL,
-  `p_id` int(11) DEFAULT NULL,
-  `d_id` int(11) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
-  `body` longtext DEFAULT NULL,
+  `post_content` longtext DEFAULT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -202,17 +155,10 @@ CREATE TABLE `post` (
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`post_id`, `p_id`, `d_id`, `title`, `body`, `created_at`) VALUES
+INSERT INTO `post` (`post_id`, `p_id`, `d_id`, `title`, `post_content`, `created_at`) VALUES
 (1, 1, 1, 'headache', 'i am headach.i am headach.i am headach.i am headach.i am headach.i am headach.', '2023-04-14 08:24:45'),
-(2, 3, 2, 'I have a stomachache.', 'I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.', '2023-04-14 08:24:45');
-
---
--- Dumping data for table `post`
---
-
-INSERT INTO `post` (`post_id`, `p_id`, `d_id`, `title`, `body`, `created_at`) VALUES
-(1, 1, 1, 'headache', 'i am headach.i am headach.i am headach.i am headach.i am headach.i am headach.', '2023-04-14 08:24:45'),
-(2, 3, 2, 'I have a stomachache.', 'I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.', '2023-04-14 08:24:45');
+(2, 3, 2, 'I have a stomachache.', 'I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.I have a stomachache.', '2023-04-14 08:24:45'),
+(5, 1, 2, 'test 3', 'i hate csce 310', '2023-04-24 16:15:39');
 
 --
 -- Indexes for dumped tables
@@ -273,13 +219,11 @@ ALTER TABLE `post`
 --
 ALTER TABLE `appointment`
   MODIFY `app_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-  MODIFY `app_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
   MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
@@ -287,13 +231,11 @@ ALTER TABLE `comment`
 --
 ALTER TABLE `doctor`
   MODIFY `d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-  MODIFY `d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `hospital`
 --
 ALTER TABLE `hospital`
-  MODIFY `h_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
   MODIFY `h_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
@@ -301,14 +243,12 @@ ALTER TABLE `hospital`
 --
 ALTER TABLE `patient`
   MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
