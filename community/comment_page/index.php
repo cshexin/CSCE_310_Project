@@ -22,10 +22,10 @@
       //Display user
       if ($isPatient){
         $sql = "SELECT * FROM patient WHERE  first_name = '$fname' AND last_name = '$lname'";
-        echo 'patient: ' . $_SESSION['name'];
+        echo 'Welcome, Patient: ';
       } else{
           $sql = "SELECT * FROM doctor WHERE  first_name = '$fname' AND last_name = '$lname'";
-          echo 'doctor: ' . $_SESSION['name'];
+          echo 'Welcome, Doctor: ';
       }
 
       // Check if the URL contains the "postid" parameter
@@ -98,7 +98,7 @@
           
       <div class="create-post">
         <!-- Insertion -->
-        <form action="insert_comment.php" method="POST">
+        <form action="insert_comment.php" method="POST">            
           <input id="input" type="text" name="comment" placeholder="Create Comment" required>
           <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
           <?php
@@ -120,8 +120,8 @@
                 <?php
                   if ($comment['p_id'] == null) {
                     // Query doctor table to get doctor name
-                    $d_id = $comment['d_id'];
-                    $doctor_sql = "SELECT * FROM doctor WHERE d_id = $d_id";
+                    $comment_d_id = $comment['d_id'];
+                    $doctor_sql = "SELECT * FROM doctor WHERE d_id = $comment_d_id";
                     $doctor_result = mysqli_query($conn, $doctor_sql);
                     $doctor = mysqli_fetch_assoc($doctor_result);
                     $doctor_lastname = htmlspecialchars($doctor['last_name']);
@@ -130,8 +130,8 @@
                     echo "<p> <span class='comment-user'> Dr. " . $doctor_firstname . $doctor_lastname .": </span> <p>";
                   } else {
                     // Query patient table to get patient name
-                    $p_id = $comment['p_id'];
-                    $patient_sql = "SELECT * FROM patient WHERE p_id = $p_id";
+                    $comment_p_id = $comment['p_id'];
+                    $patient_sql = "SELECT * FROM patient WHERE p_id = $comment_p_id";
                     $patient_result = mysqli_query($conn, $patient_sql);
                     $patient = mysqli_fetch_assoc($patient_result);
                     $patient_lastname = htmlspecialchars($patient['last_name']);
