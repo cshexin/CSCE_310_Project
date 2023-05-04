@@ -29,7 +29,7 @@
 
     mysqli_close($conn);
     // get the first and last name of user
-    $userName = $datauser[0]['first_name'] . ''. $datauser[0]['last_name'];
+    $userName = trim($datauser[0]['first_name']) . ' '. trim($datauser[0]['last_name']);
     $cssFile = 'index.css';
     $cssContent = file_get_contents($cssFile);
     $hash = md5($cssContent);
