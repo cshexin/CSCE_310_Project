@@ -88,35 +88,39 @@
             <form id="appointment_detail" method="POST">
                 <div id="appointment_text">
                     <?php if($patientUser === true): ?>
+                        <p id="enter">Please Enter Doctor Name and Date and Time: </p>
                         <label for="dname"> Doctor Name:</label>
-                        <input list="dnames" id="dname" name="dname">
-                        <datalist id = "dnames">
+                        <select id="dname" name="dname">
                             <?php foreach($datadoctor as $doctor): ?>
-                                <option value="<?php echo $doctor['d_id'] . "," . $doctor['first_name'] . "" .  $doctor['last_name']; ?>">
+                                <option value="<?php echo $doctor['d_id'] . "," . $doctor['first_name'] . "" .  $doctor['last_name']; ?>"> 
+                                    <?php echo trim($doctor['first_name']) . " " .  trim($doctor['last_name']); ?>
+                                </option>
                             <?php endforeach; ?>
-                        </datalist>
+                            </select>
                         <input type="hidden" id="add_app" name="add_app" value="<?php echo $createUserId; ?>" readonly>
                         <br> <br>
                         <label for="pname"> Patient Name:</label>
                         <input type="text" id="pname" name="pname" value="<?php echo $createpatientName; ?>" readonly>
                         <br> <br>
                     <?php else: ?>
+                        <p id="enter">Please Enter Patient Name and Date and Time: </p>
                         <input type="hidden" id="add_app" name="add_app" value="<?php echo $createUserId; ?>" readonly>
                         <br><br>
                         <label for="dname"> Doctor Name:</label>
                         <input type="text" id="dname" name="dname" value="<?php echo $createdoctorName; ?>" readonly>
                         <br><br>
                         <label for="pname"> Patient Name:</label>
-                        <input list="pnames" id="pname" name="pname">
-                        <datalist id="pnames">
+                        <select id="pname" name="pname">
                             <?php foreach($datapatient as $patient): ?>
                                 <option value="<?php echo $patient['p_id'] . "," . $patient['first_name'] . "" .  $patient['last_name']; ?>">
+                                    <?php echo trim($patient['first_name']) . " " .  trim($patient['last_name']); ?>
+                                </option>
                             <?php endforeach; ?>
-                        </datalist>
+                            </select>
                         <br><br>
                     <?php endif; ?>
                     <label for="meeting-time">Date and Time: </label>
-                    <input type="datetime-local" id="meeting-time" name="meeting-time"> <br> <br>
+                    <input type="datetime-local" id="meeting-time" name="meeting-time" min="" required> <br> <br>
                 </div>
                 <div id="appointment_button">
                     <button type="submit" id="submit-button" name="app_id_button" value="<?php echo $createUserId; ?>">Submit</button>
@@ -124,4 +128,5 @@
             <form>
         </div>
     </body>
+    <script src="time.js"></script>
 </html>
