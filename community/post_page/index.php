@@ -38,18 +38,10 @@
 
     // Write query for all posts
     $sql_post = 'SELECT * FROM post';
-    // Write query for all posts
-    $sql_post = 'SELECT * FROM post';
 
     // make query & get result
     $result = mysqli_query($conn, $sql_post);
-    // make query & get result
-    $result = mysqli_query($conn, $sql_post);
 
-    // fetch the resulting rows as an array
-    $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    
-    mysqli_free_result($result);
     // fetch the resulting rows as an array
     $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
     
@@ -78,7 +70,7 @@
 
         <!-- Area of creating post -->
         <form method="post" action="./create.php" class="create-post">
-            <input id="title-input" type="text" placeholder="Create Title" name="title">
+            <input id="title-input" type="text" placeholder="Create Title" name="title" required>
             <br>
             <input id="content-input" type="text" placeholder="Create Content" name="content">
             <br> 
