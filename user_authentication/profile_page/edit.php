@@ -20,35 +20,6 @@ if (!isset($_SESSION["id"])) {
     if($_SESSION['isPatient']){
         $dob = $_SESSION['dob'];
     }
-    // $sql = "";
-
-    // if($_SESSION['isPatient']){
-    //     $sql = "SELECT * FROM patient WHERE p_id = {$_SESSION['id']}";
-    // } else{
-    //     $sql = "SELECT * FROM doctor WHERE d_id = {$_SESSION['id']}";
-    // }
-   
-    // $stmt = mysqli_prepare($conn, $sql);
-    // if (mysqli_stmt_execute($stmt)) {
-    //     $result = mysqli_stmt_get_result($stmt);
-    //     if (mysqli_num_rows($result) == 1) {
-    //         $row = mysqli_fetch_assoc($result);
-
-    //         if($_SESSION["isPatient"]){
-    //             $_SESSION["name"] = $row['first_name'] . " " . $row['last_name'];
-    //         }
-    //         $_SESSION["id"] = $row['p_id'];
-    //         $id = $row['p_id'];
-            
-    //         $_SESSION["email"] = $row['p_email'];
-    //         $dob = $_SESSION["dob"] = $row['DOB'];
-    //         $password = $_SESSION["password"] = $row['p_password'];
-    //     } else{
-    //         echo "Invalid information entered";
-    //     }
-    // } else {
-    //     echo "Invalid information entered";
-    // }
 }
 
 if (isset($_POST) && !empty($_POST)) {

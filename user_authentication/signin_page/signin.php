@@ -21,7 +21,6 @@ $dob = $fname = $lname = $email = $password = "";
 $error = false;
 
 // TODO: ADD BETTER ERROR CHECKING
-// TODO: SUPPORT DOCTOR VS PATIENT LOG IN
 
 if (isset($_POST) && !empty($_POST)) {
     if(empty(trim($_POST["fname"]))){

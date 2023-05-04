@@ -9,7 +9,13 @@
     } 
     $dob = $fname = $lname = $email = $password = "";
 
-    if (!isset($_SESSION["name"])) {
+    
+    // $_SESSION["isPatient"] = boolean variable 
+    // $_SESSION["id"] = p_id or d_id of current logged in user
+    // 
+
+
+    if (!isset($_SESSION["id"])) {
       header("location: ../signin_page");
     } else {
       $nameData = explode(" ", $_SESSION['name']);
