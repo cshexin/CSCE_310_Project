@@ -19,15 +19,6 @@
         $lname = $nameData[1];
       }
 
-      //Display user
-      if ($isPatient){
-        $sql = "SELECT * FROM patient WHERE  first_name = '$fname' AND last_name = '$lname'";
-        echo 'Welcome, Patient: ';
-      } else{
-          $sql = "SELECT * FROM doctor WHERE  first_name = '$fname' AND last_name = '$lname'";
-          echo 'Welcome, Doctor: ';
-      }
-
       // Check if the URL contains the "postid" parameter
       if (!isset($_GET['postid'])) {
         // Set the default "postid" value
@@ -95,22 +86,35 @@
         <br>
         <?php if (isset($currentPost['post_content'])) echo "<p>" . htmlspecialchars($currentPost['post_content']) . "</p>"; ?>
       </div>
-          
-      <div class="create-post">
-        <!-- Insertion -->
-        <form action="insert_comment.php" method="POST">            
-          <input id="input" type="text" name="comment" placeholder="Create Comment" required>
-          <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
-          <?php
-            if ($isPatient) {
-              echo '<input type="hidden" name="p_id" value="' . $p_id . '">';
-            } else {
-              echo '<input type="hidden" name="d_id" value="' . $d_id . '">';
-            }
-          ?>
-          <input type="hidden" name="is_Patient" value="<?php echo $isPatient; ?>">
-          <input type="submit" name="submit" value="Submit Comment">
-        </form>
+      <div class="post-card">
+        <?php
+        //Displayuser
+        if ($isPatient){
+          $sql = "SELECT * FROM patient WHERE  first_name = '$fname' AND last_name = '$lname'";
+          echo 'Patient ' . $lname . ': ';
+        } else{
+            $sql = "SELECT * FROM doctor WHERE  first_name = '$fname' AND last_name = '$lname'";
+            echo 'Dr. ' . $lname . ': ';
+        }
+        ?>   
+
+        <div class="create-post">
+          <!-- Insertion -->
+          <form action="insert_comment.php" method="POST">            
+            <input id="input" type="text" name="comment" placeholder="Create Comment" required>
+            <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+            <?php
+              if ($isPatient) {
+                echo '<input type="hidden" name="p_id" value="' . $p_id . '">';
+              } else {
+                echo '<input type="hidden" name="d_id" value="' . $d_id . '">';
+              }
+            ?>
+            <input type="hidden" name="is_Patient" value="<?php echo $isPatient; ?>">
+            <br></br>
+            <input type="submit" name="submit" value="Submit Comment">
+          </form>
+        </div>
       </div>
 
       <div class="post-container">

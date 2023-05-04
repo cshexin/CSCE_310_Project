@@ -15,7 +15,7 @@ if(!isset($_SESSION["id"])){
     header("location: ../signin_page");
     exit;
 } else{
-    echo $_SESSION["name"];
+    // echo $_SESSION["name"];
 }
 ?>
  
