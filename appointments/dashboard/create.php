@@ -25,10 +25,10 @@
     $datapatient = mysqli_fetch_all($resultPatient, MYSQLI_ASSOC);
     $datadoctor = mysqli_fetch_all($resultDoctor, MYSQLI_ASSOC);
     if($patientUser === true){
-        $createpatientName = $datapatient[0]['first_name'] . ''. $datapatient[0]['last_name'];
+        $createpatientName = trim($datapatient[0]['first_name']) . ' '. trim($datapatient[0]['last_name']);
         $createMeetingTime = $createDoctorId = "";
     } else {
-        $createdoctorName = $datadoctor[0]['first_name'] . '' . $datadoctor[0]['last_name'];
+        $createdoctorName = trim($datadoctor[0]['first_name']) . ' ' . trim($datadoctor[0]['last_name']);
         $createMeetingTime = $createPatientId = "";
     }
 
