@@ -7,12 +7,7 @@
     { 
       session_start(); 
     } 
-    $dob = $fname = $lname = $email = $password = "";
-
-    
-    // $_SESSION["isPatient"] = boolean variable 
-    // $_SESSION["id"] = p_id or d_id of current logged in user
-    // 
+    $dob = $fname = $lname = $email = $password = $doctor = $hosptial = "";
 
 
     if (!isset($_SESSION["id"])) {
@@ -28,6 +23,24 @@
         $d_id = $_SESSION['d_id'];
       }
     }
+
+
+    if ($_SESSION["isPatient"]){
+        $sql = "SELECT * FROM doctor WHERE d_id = {$_SESSION['d_id']}";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);  
+        $row = mysqli_fetch_assoc($result);
+        $doctor = "Dr. " . " " . $row['first_name'] . " " . $row['last_name'];
+    } 
+
+    $sql = "SELECT * FROM hospital WHERE h_id = {$_SESSION['h_id']}";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);  
+    $row = mysqli_fetch_assoc($result);
+    $hosptial = $row['h_name'] . " " . $row["h_location"];
+
 ?>
 
 
@@ -50,14 +63,14 @@
         </p>
         <?php if ($_SESSION['isPatient']) { ?>
           <p>
-          Date Of Birth: <?php echo $dob?>
+          Date of Birth: <?php echo $dob?>
           </p>
           <p>
-          Doctor ID: <?php echo $d_id?>
+          Primary Doctor: <?php echo $doctor?>
           </p>
 	    <?php } ?>
         <p>
-          Hospital ID: <?php echo $h_id?>
+          Priamry Hospital: <?php echo $hosptial?>
         </p>
     </div>
     <div>
