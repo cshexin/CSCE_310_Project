@@ -52,8 +52,6 @@ if ($_SESSION["isPatient"]){
     }
 }
 
-
-
 if (isset($_POST) && !empty($_POST)) {
     if(empty(trim($_POST["fname"]))){
         $error = true;
@@ -129,7 +127,6 @@ if (isset($_POST) && !empty($_POST)) {
         }
     }
 }
-
 ?>
 
 
@@ -138,6 +135,7 @@ if (isset($_POST) && !empty($_POST)) {
   <head>
     <title>Edit Profile page</title>
     <?php include('../../header/header.php'); ?>
+    <link rel="stylesheet" href="style.css">
     
     <div class="header">
         <h2>EDIT PROFILE PAGE</h2>
@@ -191,7 +189,6 @@ if (isset($_POST) && !empty($_POST)) {
             <button type="submit" class="btn" name="update">Update Profile</button>
             <a href="index.php">Back to Profile</a>
         </div>
-
     </form>
   </body>
 </html>

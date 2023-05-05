@@ -49,6 +49,7 @@
   <head>
     <title>Profile Page</title>
     <?php include('../../header/header.php'); ?>
+    <link rel="stylesheet" href="profile.css">
     
     <div class="container">
       <h1>Profile Page</h1>
@@ -73,13 +74,13 @@
           Priamry Hospital: <?php echo $hosptial?>
         </p>
     </div>
-    <div>
-      <a href="edit.php">EDIT PROFILE</a>
+    <div class ="center">
+      <a class = "edit" href="edit.php">EDIT PROFILE</a>
     </div>
     <div>
       <form method="post" action="destroy.php">
         <input type="hidden" name="confirm_delete" value="true">
-        <button type="submit" name="delete" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">DELETE ACCOUNT</button>
+        <button type="submit" class="btn" name="delete" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">DELETE ACCOUNT</button>
       </form> 
     </div>
   </body>
