@@ -22,8 +22,10 @@
       $fname = $nameData[0];
       $lname = $nameData[1];
       $email = $_SESSION['email'];
+      $h_id = $_SESSION['h_id'];
       if ($_SESSION['isPatient']){
         $dob = $_SESSION['dob'];
+        $d_id = $_SESSION['d_id'];
       }
     }
 ?>
@@ -50,7 +52,13 @@
           <p>
           Date Of Birth: <?php echo $dob?>
           </p>
+          <p>
+          Doctor ID: <?php echo $d_id?>
+          </p>
 	    <?php } ?>
+        <p>
+          Hospital ID: <?php echo $h_id?>
+        </p>
     </div>
     <div>
       <a href="edit.php">EDIT PROFILE</a>

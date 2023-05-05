@@ -74,11 +74,13 @@ if (isset($_POST) && !empty($_POST)) {
 
                 $_SESSION["loggedin"] = true;
                 $_SESSION["name"] = $row['first_name'] . " " . $row['last_name'];
+                $_SESSION['h_id'] = $row['h_id'];
 
                 if ($_SESSION["isPatient"]){
                     $_SESSION["id"] = $row['p_id'];
                     $_SESSION["email"] = $row['p_email'];
                     $_SESSION['dob'] = $row['DOB'];
+                    $_SERVER["d_id"] = $row['d_id'];
                 } else {
                     $_SESSION["id"] = $row['d_id'];
                     $_SESSION["email"] = $row['d_email'];
@@ -100,44 +102,47 @@ if (isset($_POST) && !empty($_POST)) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sign in to HowdyHealthy</title>
+    <title>HowdyHealthy</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-    <div class="header">
-        <h2>SIGN IN PAGE</h2>
-    </div>
+    <div class=form-card>
+        <div class="header">
+            <h2>Sign In to HowdyHealthy</h2>
+        </div>
 
-    <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>>
-        <div class="input-group">
-            <label>First Name</label>
-            <input type="text" name="fname" value="John">
-        </div>
-        <div class="input-group">
-                <label>Last Name</label>
-                <input type="text" name="lname" value="Doe">
-        </div>
-        <?php if ($_SESSION['isPatient']) { ?>
+        <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>>
             <div class="input-group">
-                <label>Date of Birth</label>
-                <input type="date" name="dob" value="2023-04-30">
+                <label>First Name</label>
+                <input type="text" name="fname" value="John">
             </div>
-	    <?php } ?>
-        <div class="input-group">
-            <label>Email</label>
-            <input type="email" name="email" >
-        </div>
-        <div class="input-group">
-            <label>Password</label>
-            <input type="password" name="password" >
-        </div>
-        <div class="input-group">
-            <button type="submit" class="btn" name="login">Login</button>
-        </div>
-        <p>
-            Don't have an account? <a href="signup.php">Sign Up Here!</a>
-        </p>
-    </form>
+            <div class="input-group">
+                    <label>Last Name</label>
+                    <input type="text" name="lname" value="Doe">
+            </div>
+            <?php if ($_SESSION['isPatient']) { ?>
+                <div class="input-group">
+                    <label>Date of Birth</label>
+                    <input type="date" name="dob" value="2023-04-30">
+                </div>
+            <?php } ?>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" >
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" >
+            </div>
+            <div class="input-group">
+                <button type="submit" class="btn" name="login">Login</button>
+            </div>
+            <p>
+                Don't have an account? <a href="signup.php">Sign Up Here!</a>
+            </p>
+        </form>
+    </div>
 </body>
 
 </html>
