@@ -4,51 +4,52 @@ include('../../config/db_connect.php');
 
 if(!isset($_SESSION)) { session_start(); }
 
+if (!isset($_SESSION["id"])) {
+    header("location: ../signin_page");
+    exit;
+} 
+
 $id = 0;
 $dob = $fname = $lname = $email = $password = "";
 $error = false;
 $sql = "";
+$doctor_id = 1;
+$hospita_id = 1;
+$doctorsSelection = array();
+$hospitalSelection = array();
+$doctorsToHospital = array();
 
-if (!isset($_SESSION["id"])) {
-    header("location: ../signin_page");
+$nameData = explode(" ", $_SESSION['name']);
+$fname = $nameData[0];
+$lname = $nameData[1];
+$email = $_SESSION['email'];
+$id = $_SESSION['id'];
+$hospital_id = $_SESSION['h_id'];
+if($_SESSION['isPatient']){
+    $dob = $_SESSION['dob'];
+    $doctor_id = $_SESSION['d_id'];
+}
+
+if ($_SESSION["isPatient"]){
+    $sql = "SELECT * FROM doctor";
 } else {
-    $nameData = explode(" ", $_SESSION['name']);
-    $fname = $nameData[0];
-    $lname = $nameData[1];
-    $email = $_SESSION['email'];
-    $id = $_SESSION['id'];
-    if($_SESSION['isPatient']){
-        $dob = $_SESSION['dob'];
+    $sql = "SELECT * FROM hospital";
+}
+
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+
+if ($_SESSION["isPatient"]){
+    while ($row = mysqli_fetch_assoc($result)) {
+        $doctorsSelection[$row['d_id']] = "Dr. " . $row['first_name'] . " " . $row["last_name"];
+        $doctorsToHospital[$row['d_id']] = $row['h_id'];
     }
-    // $sql = "";
-
-    // if($_SESSION['isPatient']){
-    //     $sql = "SELECT * FROM patient WHERE p_id = {$_SESSION['id']}";
-    // } else{
-    //     $sql = "SELECT * FROM doctor WHERE d_id = {$_SESSION['id']}";
-    // }
-   
-    // $stmt = mysqli_prepare($conn, $sql);
-    // if (mysqli_stmt_execute($stmt)) {
-    //     $result = mysqli_stmt_get_result($stmt);
-    //     if (mysqli_num_rows($result) == 1) {
-    //         $row = mysqli_fetch_assoc($result);
-
-    //         if($_SESSION["isPatient"]){
-    //             $_SESSION["name"] = $row['first_name'] . " " . $row['last_name'];
-    //         }
-    //         $_SESSION["id"] = $row['p_id'];
-    //         $id = $row['p_id'];
-            
-    //         $_SESSION["email"] = $row['p_email'];
-    //         $dob = $_SESSION["dob"] = $row['DOB'];
-    //         $password = $_SESSION["password"] = $row['p_password'];
-    //     } else{
-    //         echo "Invalid information entered";
-    //     }
-    // } else {
-    //     echo "Invalid information entered";
-    // }
+} else {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $hospitalSelection[$row['h_id']] = $row['h_name'];
+    }
 }
 
 if (isset($_POST) && !empty($_POST)) {
@@ -88,13 +89,20 @@ if (isset($_POST) && !empty($_POST)) {
         $password = trim($_POST["password"]);
     }
 
+    if ($_SESSION["isPatient"]){
+        $doctor_id = $_POST['doctor'];
+        $hospital_id = $doctorsToHospital[$doctor_id];
+    } else {
+        $hospital_id = $_POST['hospital'];
+    }
+
     if(!$error){
         echo $fname . " " . $lname . " " . $password . " " .  $email . " " . $id;
 
         if($_SESSION['isPatient']){
-            $sql = "UPDATE patient SET first_name = '$fname', last_name = '$lname', DOB = '$dob', p_password = $password, p_email = '$email' WHERE p_id = $id";
+            $sql = "UPDATE patient SET first_name = '$fname', last_name = '$lname', DOB = '$dob', d_id = $doctor_id, h_id = $hospital_id, p_password = $password, p_email = '$email' WHERE p_id = $id";
         } else {
-            $sql = "UPDATE doctor SET first_name = '$fname', last_name = '$lname', d_password = $password, d_email = '$email' WHERE d_id = $id";
+            $sql = "UPDATE doctor SET first_name = '$fname', last_name = '$lname', h_id = $hospital_id, d_password = $password, d_email = '$email' WHERE d_id = $id";
         }
         
         // TODO: ADD CHECK TO MAKE SURE EMAILS ARE NOT THE SAME
@@ -107,9 +115,11 @@ if (isset($_POST) && !empty($_POST)) {
             $_SESSION["name"] = $fname . " " . $lname;
             $_SESSION["email"] = $email;
             $_SESSION["password"] = $password;
+            $_SESSION['h_id'] = $hospital_id;
 
             if($_SESSION['isPatient']){
                 $_SESSION["dob"] = $dob;
+                $_SESSION["d_id"] = $doctor_id;
             }
     
             header("location: index.php");
@@ -117,7 +127,6 @@ if (isset($_POST) && !empty($_POST)) {
         }
     }
 }
-
 ?>
 
 
@@ -126,6 +135,7 @@ if (isset($_POST) && !empty($_POST)) {
   <head>
     <title>Edit Profile page</title>
     <?php include('../../header/header.php'); ?>
+    <link rel="stylesheet" href="style.css">
     
     <div class="header">
         <h2>EDIT PROFILE PAGE</h2>
@@ -145,7 +155,28 @@ if (isset($_POST) && !empty($_POST)) {
                 <label>Date of Birth</label>
                 <input type="date" name="dob" value="2023-04-30">
             </div>
-	    <?php } ?>
+            <div class="input-group">
+                <label>Primary Doctor</label>
+                <select class="sel" name="doctor">
+                    <?php foreach ($doctorsSelection as $id => $name) { ?>
+                        <option value="<?php echo $id; ?>" <?php if ($id == $doctor_id) echo "selected"; ?>>
+                            <?php echo $name; ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </div>
+        <?php } else { ?>
+            <div class="input-group">
+                <label>Primary Hospital</label>
+                <select class="sel" name="hospital">
+                    <?php foreach ($hospitalSelection as $id => $name) { ?>
+                        <option value="<?php echo $id; ?>" <?php if ($id == $hospital_id) echo "selected"; ?>>
+                            <?php echo $name; ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </div>
+        <?php } ?>
         <div class="input-group">
             <label>Email</label>
             <input type="email" name="email"  value="<?php echo isset($email) ? $email : ''; ?>" >
@@ -156,8 +187,8 @@ if (isset($_POST) && !empty($_POST)) {
         </div>
         <div class="input-group">
             <button type="submit" class="btn" name="update">Update Profile</button>
+            <a href="index.php">Back to Profile</a>
         </div>
-
     </form>
   </body>
 </html>

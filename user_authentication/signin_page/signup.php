@@ -13,12 +13,38 @@ if(!isset($_SESSION["isPatient"])){
     header("location: index.php");
 }
 
-
 $dob = $fname = $lname = $email = $password = "";
+$doctor = 1;
+$hospital = 1;
+$doctorsSelection = array();
+$hospitalSelection = array();
+$doctorToHospital = array();
+
 $error = false;
 
-// TODO: ADD BETTER ERROR CHECKING
-// TODO: SUPPORT DOCTOR VS PATIENT LOG IN
+if ($_SESSION["isPatient"]){
+    $sql = "SELECT * FROM doctor";
+} else {
+    $sql = "SELECT * FROM hospital";
+}
+
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+
+if ($_SESSION["isPatient"]){
+    while ($row = mysqli_fetch_assoc($result)) {
+        $doctorsSelection[$row['d_id']] = "Dr. " . $row['first_name'] . " " . $row["last_name"];
+        $doctorsToHospital[$row['d_id']] = $row['h_id'];
+    }
+} else {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $hospitalSelection[$row['h_id']] = $row['h_name'];
+    }
+}
+
+
 
 if (isset($_POST) && !empty($_POST)) {
     if(empty(trim($_POST["fname"]))){
@@ -42,7 +68,6 @@ if (isset($_POST) && !empty($_POST)) {
             $dob = trim($_POST["dob"]);
         }
     }
-    
     if(empty(trim($_POST["email"]))){
         $error = true;
         $email = "Please enter a email.";
@@ -57,13 +82,20 @@ if (isset($_POST) && !empty($_POST)) {
         $password = trim($_POST["password"]);
     }
 
+    if ($_SESSION["isPatient"]){
+        $doctor = $_POST['doctor'];
+        $hospital = $doctorsToHospital[$doctor];
+    } else {
+        $hospital = $_POST['hospital'];
+    }
+
     $sql = "";
 
     if(!$error){
         if ($_SESSION["isPatient"]){
-            $sql = "INSERT INTO patient (first_name, last_name, DOB, h_id, d_id ,p_password, p_email) VALUES ('$fname', '$lname', '$dob', 1, 1, '$password', '$email')";
+            $sql = "INSERT INTO patient (first_name, last_name, DOB, h_id, d_id ,p_password, p_email) VALUES ('$fname', '$lname', '$dob', $hospital, $doctor, '$password', '$email')";
         } else {
-            $sql = "INSERT INTO doctor (first_name, last_name, h_id ,d_password, d_email) VALUES ('$fname', '$lname', 1, '$password', '$email')";
+            $sql = "INSERT INTO doctor (first_name, last_name, h_id ,d_password, d_email) VALUES ('$fname', '$lname', $hospital, '$password', '$email')";
         }
         if(mysqli_query($conn, $sql)){
             if(mysqli_affected_rows($conn) > 0){
@@ -81,11 +113,12 @@ if (isset($_POST) && !empty($_POST)) {
                 mysqli_stmt_execute($stmt);
                 $result = mysqli_stmt_get_result($stmt);
                 $row = mysqli_fetch_assoc($result);
-                $_SESSION["loggedin"] = true;
+                $_SESSION["h_id"] = $row['h_id'];
 
                 if ($_SESSION["isPatient"]){
                     $_SESSION["id"] = $row['p_id'];
                     $_SESSION['dob'] = $row['DOB'];
+                    $_SESSION['d_id'] = $row['d_id'];
                 } else {
                     $_SESSION["id"] = $row['d_id'];
                 }
@@ -113,44 +146,65 @@ if (isset($_POST) && !empty($_POST)) {
 <html>
 
 <head>
-    <title>Sign Up to HowdyHealthy</title>
+    <title>HowdyHealthy</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-    <div class="header">
-        <h2>Register</h2>
-    </div>
-
-    <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>>
-        <div class="input-group">
-            <label>First Name</label>
-            <input type="text" name="fname" value="John">
+    <div class=form-card>
+        <div class="header">
+            <h2>Sign Up to HowdyHealthy</h2>
         </div>
-        <div class="input-group">
+
+        <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>>
+            <div class="input-group">
+                <label>First Name</label>
+                <input type="text" name="fname" value="John">
+            </div>
+            <div class="input-group">
                 <label>Last Name</label>
                 <input type="text" name="lname" value="Doe">
-        </div>
-        <?php if ($_SESSION['isPatient']) { ?>
-            <div class="input-group">
-                <label>Date of Birth</label>
-                <input type="date" name="dob" value="2023-04-30">
             </div>
-	    <?php } ?>
-        <div class="input-group">
-            <label>Email</label>
-            <input type="email" name="email" >
-        </div>
-        <div class="input-group">
-            <label>Password</label>
-            <input type="password" name="password" >
-        </div>
-        <div class="input-group">
-            <button type="submit" class="btn" name="register">Register</button>
-        </div>
-        <p>
-            Already a member? <a href="signin.php">Sign in</a>
-        </p>
-    </form>
+
+            <?php if ($_SESSION['isPatient']) { ?>
+                <div class="input-group">
+                    <label>Date of Birth</label>
+                    <input type="date" name="dob" value="2023-04-30">
+                </div>
+                <div class="input-group">
+                    <label>Primary Doctor</label>
+                    <select class="sel" name="doctor">
+                        <?php foreach ($doctorsSelection as $id => $name) { ?>
+                            <option value="<?php echo $id; ?>"><?php echo $name; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            <?php } else { ?>
+                <div class="input-group">
+                    <label>Primary Hospital</label>
+                    <select class="sel" name="hospital">
+                        <?php foreach ($hospitalSelection as $id => $name) { ?>
+                            <option value="<?php echo $id; ?>"><?php echo $name; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            <?php } ?>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" >
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" >
+            </div>
+            <div class="input-group">
+                <button type="submit" class="btn" name="register">Register</button>
+            </div>
+            <p>
+                Already a member? <a href="signin.php">Sign in</a>
+            </p>
+        </form>
+    </div>
 </body>
 
 </html>
