@@ -27,5 +27,6 @@ if (!isset($_SESSION["id"])) {
     } else{
         echo "Delete query failed";
     }
+
 }   
 ?>
