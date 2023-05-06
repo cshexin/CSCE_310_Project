@@ -1,3 +1,5 @@
+<!-- Description: This .php file is used for creating new the comments.
+Author: Tian Wu -->
 <?php
     require_once '../../config/db_connect.php';
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {

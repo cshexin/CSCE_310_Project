@@ -1,3 +1,8 @@
+<!-- 
+    Description: This .php file is used for deleting the comments.
+    Author: Tian Wu 
+-->
+
 <?php 
 require_once "../../config/db_connect.php";
 
@@ -5,10 +10,10 @@ if (isset($_POST['comment_id'])) {
     $comment_id = intval($_POST['comment_id']);
     $post_id = intval($_POST['post_id']);
     $stmt = mysqli_prepare($conn, "DELETE FROM comment WHERE comment_id = ?");
-
+    
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "i", $comment_id);
-
+        // Check if delete successfully.
         if (mysqli_stmt_execute($stmt)) {
             mysqli_stmt_close($stmt);
             header("Location: index.php?postid=" . $post_id . "&message=Comment+deleted+successfully");

@@ -1,3 +1,6 @@
+/* Description: This is .css styles for the comment page..
+Author: Tian Wu  */
+
 .container {
     width: 80%;
     margin: 0 auto;
@@ -67,10 +70,6 @@ a {
     color: #0077b6;
 }
 
-/* .buttons-container {
-  display:inline-flex;
-  height:inherit;
-} */
 
 .button-form {
   margin-right: 100px; 

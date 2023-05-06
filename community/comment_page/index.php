@@ -1,3 +1,6 @@
+<!-- Description: This is the main .php file of comment page.
+Author: Tian Wu -->
+
 <?php
       // connect database
       include('../../config/db_connect.php');
