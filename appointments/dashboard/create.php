@@ -1,3 +1,7 @@
+<!--
+    Description: file makes the user create an appointment
+    Author: Valerie Villafana
+-->
 <?php
     session_start();
     // connect to database
@@ -8,7 +12,7 @@
     // boolean variable to know if user is a patient or a doctor
     $patientUser = $_SESSION['isPatient'];
 
-    // wrtite query for patients
+    // wrtite query for patients or doctors
     if($patientUser === true){
         $sqlpatient = "SELECT first_name, last_name FROM patient WHERE p_id = $createUserId";
         $sqldoctor = "SELECT d_id, last_name, first_name FROM doctor";

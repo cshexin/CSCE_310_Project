@@ -1,3 +1,5 @@
+// Description: gets the current time to make sure user can't schdule past the current date
+// Author: Valerie Villafana
 var date = new Date();
 var year = date.getFullYear();
 var month = date.getMonth() + 1;

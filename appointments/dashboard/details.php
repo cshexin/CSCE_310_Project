@@ -1,3 +1,7 @@
+<!--
+    Description: file makes the user view, update, and delete appointment
+    Author: Valerie Villafana
+-->
 <?php
     session_start();
     include("../../config/db_connect.php");

@@ -1,3 +1,7 @@
+<!--
+    Description: file makes the user view all appointments
+    Author: Valerie Villafana
+-->
 <?php
     session_start();
     // connect to database
