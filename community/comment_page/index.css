@@ -1,0 +1,104 @@
+/* Description: This is .css styles for the comment page..
+Author: Tian Wu  */
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+
+}
+
+.create-post{
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+    justify-content: center;
+
+}
+
+#input {
+    width:98%;
+    height: 30px;
+    justify-content: center;
+
+}
+
+#input::placeholder{
+    padding: 10px;
+}
+
+.post-container {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 20px;
+}
+
+.post-card {
+    display: block;
+    /* justify-content: space-between; */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 10px;
+    margin: 10px;
+}
+
+.post-card h1 {
+    margin-top: 20px;
+    width: 100%;
+    text-align: left;
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card-link:hover .post-card {
+    border: 1px solid #0077b6;
+}
+  
+.card-link:hover .card-content h3 {
+    color: #0077b6;
+}
+  
+.card-link:hover .detail-btn {
+    color: #0077b6;
+}
+
+
+.button-form {
+  margin-right: 100px; 
+}
+
+.button {
+  background-color: #4CAF50; 
+  color: rgb(255, 255, 255); 
+  border: none;
+  padding: 5px 10px; 
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.comment-meta {
+    font-style: italic;
+    font-size: 12px;
+    margin-right: 5px;
+    color: #5a0606;
+}  
+  
+.delete-form {
+  display: inline-block;
+}
+
+.edit-button {
+  margin: 10px;
+  display: inline-block;
+}

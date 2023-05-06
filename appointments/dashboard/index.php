@@ -1,17 +1,15 @@
+<!--
+    Description: file makes the user view all appointments
+    Author: Valerie Villafana
+-->
 <?php
     session_start();
     // connect to database
     include("../../config/db_connect.php");
-    // replace when integrating
-    $_SESSION['user'] = true;
     // boolean variable to know if user is a patient or a doctor
-    $patientUser = $_SESSION['user'];
+    $patientUser = $_SESSION['isPatient'];
 
-    if($patientUser === true){
-        $userid = 1; // patient user: Aiden Gardner
-    } else {
-        $userid = 1; // doctor user: Williams Riley
-    }
+    $userid = $_SESSION['id'];
 
     // wrtite query for patients
     if($patientUser === true){
@@ -35,7 +33,7 @@
 
     mysqli_close($conn);
     // get the first and last name of user
-    $userName = $datauser[0]['first_name'] . ''. $datauser[0]['last_name'];
+    $userName = trim($datauser[0]['first_name']) . ' '. trim($datauser[0]['last_name']);
     $cssFile = 'index.css';
     $cssContent = file_get_contents($cssFile);
     $hash = md5($cssContent);

@@ -1,3 +1,7 @@
+<!--
+    Description: file makes the user create an appointment
+    Author: Valerie Villafana
+-->
 <?php
     session_start();
     // connect to database
@@ -6,9 +10,9 @@
     // recieves the id of the user
     $createUserId = $_POST['add_app'];
     // boolean variable to know if user is a patient or a doctor
-    $patientUser = $_SESSION['user'];
+    $patientUser = $_SESSION['isPatient'];
 
-    // wrtite query for patients
+    // wrtite query for patients or doctors
     if($patientUser === true){
         $sqlpatient = "SELECT first_name, last_name FROM patient WHERE p_id = $createUserId";
         $sqldoctor = "SELECT d_id, last_name, first_name FROM doctor";
@@ -25,10 +29,10 @@
     $datapatient = mysqli_fetch_all($resultPatient, MYSQLI_ASSOC);
     $datadoctor = mysqli_fetch_all($resultDoctor, MYSQLI_ASSOC);
     if($patientUser === true){
-        $createpatientName = $datapatient[0]['first_name'] . ''. $datapatient[0]['last_name'];
+        $createpatientName = trim($datapatient[0]['first_name']) . ' '. trim($datapatient[0]['last_name']);
         $createMeetingTime = $createDoctorId = "";
     } else {
-        $createdoctorName = $datadoctor[0]['first_name'] . '' . $datadoctor[0]['last_name'];
+        $createdoctorName = trim($datadoctor[0]['first_name']) . ' ' . trim($datadoctor[0]['last_name']);
         $createMeetingTime = $createPatientId = "";
     }
 
@@ -88,35 +92,39 @@
             <form id="appointment_detail" method="POST">
                 <div id="appointment_text">
                     <?php if($patientUser === true): ?>
+                        <p id="enter">Please Enter Doctor Name and Date and Time: </p>
                         <label for="dname"> Doctor Name:</label>
-                        <input list="dnames" id="dname" name="dname">
-                        <datalist id = "dnames">
+                        <select id="dname" name="dname">
                             <?php foreach($datadoctor as $doctor): ?>
-                                <option value="<?php echo $doctor['d_id'] . "," . $doctor['first_name'] . "" .  $doctor['last_name']; ?>">
+                                <option value="<?php echo $doctor['d_id'] . "," . $doctor['first_name'] . "" .  $doctor['last_name']; ?>"> 
+                                    <?php echo trim($doctor['first_name']) . " " .  trim($doctor['last_name']); ?>
+                                </option>
                             <?php endforeach; ?>
-                        </datalist>
+                            </select>
                         <input type="hidden" id="add_app" name="add_app" value="<?php echo $createUserId; ?>" readonly>
                         <br> <br>
                         <label for="pname"> Patient Name:</label>
                         <input type="text" id="pname" name="pname" value="<?php echo $createpatientName; ?>" readonly>
                         <br> <br>
                     <?php else: ?>
+                        <p id="enter">Please Enter Patient Name and Date and Time: </p>
                         <input type="hidden" id="add_app" name="add_app" value="<?php echo $createUserId; ?>" readonly>
                         <br><br>
                         <label for="dname"> Doctor Name:</label>
                         <input type="text" id="dname" name="dname" value="<?php echo $createdoctorName; ?>" readonly>
                         <br><br>
                         <label for="pname"> Patient Name:</label>
-                        <input list="pnames" id="pname" name="pname">
-                        <datalist id="pnames">
+                        <select id="pname" name="pname">
                             <?php foreach($datapatient as $patient): ?>
                                 <option value="<?php echo $patient['p_id'] . "," . $patient['first_name'] . "" .  $patient['last_name']; ?>">
+                                    <?php echo trim($patient['first_name']) . " " .  trim($patient['last_name']); ?>
+                                </option>
                             <?php endforeach; ?>
-                        </datalist>
+                            </select>
                         <br><br>
                     <?php endif; ?>
                     <label for="meeting-time">Date and Time: </label>
-                    <input type="datetime-local" id="meeting-time" name="meeting-time"> <br> <br>
+                    <input type="datetime-local" id="meeting-time" name="meeting-time" min="" required> <br> <br>
                 </div>
                 <div id="appointment_button">
                     <button type="submit" id="submit-button" name="app_id_button" value="<?php echo $createUserId; ?>">Submit</button>
@@ -124,4 +132,5 @@
             <form>
         </div>
     </body>
+    <script src="time.js"></script>
 </html>

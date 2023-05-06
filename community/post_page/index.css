@@ -1,0 +1,123 @@
+/* 
+    Description: File to style the post page
+    Author: Hexin Hu
+*/
+
+h6{
+    color: #756767;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+
+}
+
+.create-post{
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+    justify-content: center;
+}
+
+#title-input {
+    width:98%;
+    height: 30px;
+    justify-content: center;
+}
+
+#content-input {
+    width:98%;
+    height: 100px;
+    justify-content: center;
+    margin-top: 20px;
+    vertical-align: top;
+}
+
+#title-input::placeholder{
+    padding: 10px;
+}
+
+#content-input::placeholder{
+    padding: 10px;
+}
+
+.submit-btn{
+    font-family: Arial; 
+    font-size: 16px; 
+    font-weight: bold; 
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    background-color: #FFFFFF;
+    color: #681414;
+  }
+
+.post-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 20px;
+}
+
+.post-card {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 10px;
+    margin: 10px;
+    overflow-wrap: break-word;
+}
+
+.edit-form{
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    vertical-align: top;
+    text-align: left;
+    overflow-wrap: break-word;
+}
+
+#edit-title{
+    width:98%;
+    height: 30px;
+    justify-content: center;
+}
+
+#edit-content{
+    width:98%;
+    height: 100px;
+    margin-top: 20px;
+    vertical-align: top;
+    text-align: left;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.delete-btn-form, .edit-btn {
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card-link:hover .post-card {
+    border: 1px solid #0077b6;
+}
+  
+.card-link:hover .card-content h3 {
+    color: #0077b6;
+}
+  
+.card-link:hover .detail-btn {
+    color: #0077b6;
+}

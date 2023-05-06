@@ -1,3 +1,7 @@
+/*
+    Description: file makes the styling for create.php
+    Author: Valerie Villafana
+*/
 #info {
     background-color: #ffff;
     padding-left: 100px;
@@ -6,6 +10,10 @@
     margin-left: 100px;
     margin-right: 100px;
     margin-top: 50px;
+}
+
+#enter {
+    color: #5a0606
 }
 
 #submit-button {

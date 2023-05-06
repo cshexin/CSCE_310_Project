@@ -1,9 +1,13 @@
+<!--
+    Description: file makes the user view, update, and delete appointment
+    Author: Valerie Villafana
+-->
 <?php
     session_start();
     include("../../config/db_connect.php");
     
     // boolean variable to know if user is a patient or a doctor
-    $patientUser = $_SESSION['user'];
+    $patientUser = $_SESSION['isPatient'];
 
     if(isset($_POST['delete'])){
         $id_to_modify = mysqli_real_escape_string($conn, $_POST['id_to_modify']);
@@ -93,8 +97,8 @@
         $doctor_info = mysqli_fetch_assoc($resultdoctor);
         $datalist = mysqli_fetch_all($resultlist);
 
-        $patientName = $patient_info['first_name'] . '' . $patient_info['last_name'];
-        $doctorName = $doctor_info['first_name'] . '' . $doctor_info['last_name'] . ', MD';
+        $patientName = trim($patient_info['first_name']) . ' ' . trim($patient_info['last_name']);
+        $doctorName = trim($doctor_info['first_name']) . ' ' . trim($doctor_info['last_name']) . ', MD';
 
         mysqli_free_result($resultlist);
         mysqli_free_result($resultpatient);
@@ -126,12 +130,13 @@
                         <label for="doctor_name"> Doctor Name: </label>
                         <input type="text" id="dname" name="dname" value="<?php echo $doctorName ?>" readonly>
                         <span hidden="hidden" id="showdoctorlist">
-                            <input list="dnames" id="dname" name="dname">
-                            <datalist id = "dnames">
+                            <select id = "dname" name="dname">
                                 <?php foreach($datalist as $doctor): ?>
                                     <option value="<?php echo $doctor[0] . "," . $doctor[1] . "" .  $doctor[2]; ?>">
+                                        <?php echo trim($doctor[1]) . " " . trim($doctor[2]); ?>
+                                    </option>
                                 <?php endforeach; ?>
-                            </datalist>
+                            </select>
                         </span>
                         <br><br>
                         <label for="patient_name"> Patient Name: </label>
@@ -144,17 +149,18 @@
                         <label for="patient_name"> Patient Name:</label>
                         <input type="text" id="pname" name="pname" value="<?php echo $patientName; ?>" readonly>
                         <span hidden="hidden" id="showpatientlist">
-                            <input list="pnames" id="pname" name="pname">
-                            <datalist id="pnames">
+                            <select id="pname" name="pname">
                                 <?php foreach($datalist as $patient): ?>
                                     <option value="<?php echo $patient[0] . "," . $patient[1] . "" .  $patient[2]; ?>">
+                                        <?php echo trim($patient[1]) . " " . trim($patient[2]); ?>
+                                    </option>
                                 <?php endforeach; ?>
-                            </datalist>
+                            </select>
                         </span>
                         <br><br>
                     <?php endif; ?>
                     <label for="meeting-time"> Time: </label>
-                    <input type="datetime-local" id="meeting-time" name="meeting-time" value="<?php echo $time; ?>" readonly="readonly">
+                    <input type="datetime-local" id="meeting-time" name="meeting-time" value="<?php echo $time; ?>" readonly="readonly" required>
                     <br><br>
 
                 <!-- DELETE AND UPDATE APPOINTMENT -->
@@ -174,4 +180,5 @@
     <?php else: ?>
         <script src="new2.js"></script>
     <?php endif; ?>
+    <script src="time.js"></script>
 </html>
