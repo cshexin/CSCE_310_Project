@@ -1,4 +1,7 @@
-
+<!-- 
+    Description: File to make the post page functional
+    Author: Hexin Hu
+ -->
 <?php
     // Avoiding cache problem when the website hosts
     $cssFile = 'index.css';
