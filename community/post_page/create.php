@@ -17,6 +17,7 @@
     $firstName = $nameArray[0];
     $lastName = $nameArray[1];
 
+    // Retrieve data from FORM
     if(isset($_POST['submit'])){
       $title = mysqli_real_escape_string($conn, $_POST["title"]);
       $content = mysqli_real_escape_string($conn, $_POST["content"]);
@@ -31,6 +32,7 @@
 
       }
 
+      // check
       if(mysqli_query($conn, $sql_insert)){
         if(mysqli_affected_rows($conn) > 0){
           //success
