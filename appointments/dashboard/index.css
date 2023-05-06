@@ -1,0 +1,45 @@
+#dashboard-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#dashboard {
+    color: #5a0606;
+    padding-left: 100px;
+}
+
+#add_app{
+    text-align: center;
+    padding: 20px 20px;
+    border-radius: 20px;
+}
+
+#add_app:hover {
+    background-color: #5a0606;
+    color: #ffff;
+}
+
+#patient-appointments {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-row: auto auto;
+    grid-column-gap: 50px;
+    grid-row-gap: 20px;
+    padding-left: 50px;
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+    
+}
+
+#patient-appointments button{
+    width: 500px;
+    height: 300px;
+    font-size: 20px;
+}
+
+#appointment-button:hover {
+    background-color: #5a0606;
+    color: #ffff;
+}
