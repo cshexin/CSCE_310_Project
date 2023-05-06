@@ -1,3 +1,7 @@
+
+-- Description: File to create and load a database
+-- Author: Andrew Mao, Hexin Hu, Tian Wu, Valerie Villafana
+
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
