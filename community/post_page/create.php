@@ -1,5 +1,12 @@
+<!-- 
+    Description: File to make user creates post
+    Author: Hexin Hu
+ -->
+
 <?php
     include('../../config/db_connect.php');
+
+    // Error checking
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
