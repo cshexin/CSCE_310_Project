@@ -1,3 +1,6 @@
+// Description: File to make the edit-btn functional in post page
+// Author: Hexin Hu
+
 function showEditForm(postId) {
   var postCard = document.querySelector('#post-' + postId);
   var title = postCard.querySelector('.card-content h3').textContent;
