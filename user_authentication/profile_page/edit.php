@@ -1,14 +1,25 @@
 <?php
 
+/*
+
+Description: file that is the edit page for users on the profile page
+Author: Andrew Mao
+
+*/
+
+// connect to database
 include('../../config/db_connect.php');
 
+// checks if session has started and start it if not
 if(!isset($_SESSION)) { session_start(); }
 
+// redirects user to the sign in page, if they are not logged in 
 if (!isset($_SESSION["id"])) {
     header("location: ../signin_page");
     exit;
 } 
 
+// declare local variables that represent user attributes
 $id = 0;
 $dob = $fname = $lname = $email = $password = "";
 $error = false;
@@ -19,6 +30,8 @@ $doctorsSelection = array();
 $hospitalSelection = array();
 $doctorsToHospital = array();
 
+
+// extract and set variables from the session global variable data
 $nameData = explode(" ", $_SESSION['name']);
 $fname = $nameData[0];
 $lname = $nameData[1];
@@ -30,17 +43,19 @@ if($_SESSION['isPatient']){
     $doctor_id = $_SESSION['d_id'];
 }
 
+// sets sql command dynamically to either patients or doctors
 if ($_SESSION["isPatient"]){
     $sql = "SELECT * FROM doctor";
 } else {
     $sql = "SELECT * FROM hospital";
 }
 
+// prepares and executes the sql command
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
-
+// sets up a doctorID and hospitalID mapping to the name to easily display and update on the form
 if ($_SESSION["isPatient"]){
     while ($row = mysqli_fetch_assoc($result)) {
         $doctorsSelection[$row['d_id']] = "Dr. " . $row['first_name'] . " " . $row["last_name"];
@@ -52,6 +67,7 @@ if ($_SESSION["isPatient"]){
     }
 }
 
+// handles and validates form submitted data
 if (isset($_POST) && !empty($_POST)) {
     if(empty(trim($_POST["fname"]))){
         $error = true;
@@ -88,7 +104,6 @@ if (isset($_POST) && !empty($_POST)) {
     } else {
         $password = trim($_POST["password"]);
     }
-
     if ($_SESSION["isPatient"]){
         $doctor_id = $_POST['doctor'];
         $hospital_id = $doctorsToHospital[$doctor_id];
@@ -96,22 +111,25 @@ if (isset($_POST) && !empty($_POST)) {
         $hospital_id = $_POST['hospital'];
     }
 
+
     if(!$error){
         echo $fname . " " . $lname . " " . $password . " " .  $email . " " . $id;
-
+        // checks whether to update patient or doctor and builds out the sql command
         if($_SESSION['isPatient']){
             $sql = "UPDATE patient SET first_name = '$fname', last_name = '$lname', DOB = '$dob', d_id = $doctor_id, h_id = $hospital_id, p_password = $password, p_email = '$email' WHERE p_id = $id";
         } else {
             $sql = "UPDATE doctor SET first_name = '$fname', last_name = '$lname', h_id = $hospital_id, d_password = $password, d_email = '$email' WHERE d_id = $id";
         }
         
-        // TODO: ADD CHECK TO MAKE SURE EMAILS ARE NOT THE SAME
+        // prepares and executes the sql query
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_execute($stmt);
 
+        // validates the executed sql query 
         if (mysqli_stmt_affected_rows($stmt) != 1){
             echo "Query didn't go through";
         } else {
+            // updates and stashes corresponding session variables 
             $_SESSION["name"] = $fname . " " . $lname;
             $_SESSION["email"] = $email;
             $_SESSION["password"] = $password;
@@ -121,7 +139,7 @@ if (isset($_POST) && !empty($_POST)) {
                 $_SESSION["dob"] = $dob;
                 $_SESSION["d_id"] = $doctor_id;
             }
-    
+            // redirects back to profile page index
             header("location: index.php");
             exit;
         }

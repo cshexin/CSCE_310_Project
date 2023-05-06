@@ -1,4 +1,11 @@
 <?php
+/*
+
+Description: logout script to reset all session variables and redirects to home page
+Author: Andrew Mao
+
+*/
+
 // Initialize the session
 session_start();
  

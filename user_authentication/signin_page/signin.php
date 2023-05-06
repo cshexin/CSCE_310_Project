@@ -1,27 +1,37 @@
 <?php
+/*
 
-// // connect database
+Description: The sign in page for users to fill in their information
+Author: Andrew Mao
+
+*/
+
+// connect database
 include('../../config/db_connect.php');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// start the session for the session global variable
 session_start();
 
+// checks if the user is logged in, if they are, then redirect to the profile page
 if(isset($_SESSION["name"])){
     header("location: ../profile_page");
     exit;
 }
 
+// if the isPatient boolean variable is not set then redirect to the selection screen for determining patient/doctor status
 if(!isset($_SESSION["isPatient"])){
     header("location: index.php");
 }
 
+// create local varibales to store data about the user
 $dob = $fname = $lname = $email = $password = "";
 $error = false;
 
-// TODO: ADD BETTER ERROR CHECKING
 
+// handles form input, validates it, and stores it in previously created local variables
 if (isset($_POST) && !empty($_POST)) {
     if(empty(trim($_POST["fname"]))){
         $error = true;
@@ -61,17 +71,20 @@ if (isset($_POST) && !empty($_POST)) {
 
     $sql = "";
     if(!$error){
+        // dynamically create sql command for either patient or doctor
         if ($_SESSION["isPatient"]){
             $sql = "SELECT * FROM patient WHERE p_email = '$email' AND first_name = '$fname' AND last_name = '$lname'";
         } else{
             $sql = "SELECT * FROM doctor WHERE d_email = '$email' AND first_name = '$fname' AND last_name = '$lname'";
         }
+
+        // prepare and execute the sql command
         $stmt = mysqli_prepare($conn, $sql);
         if (mysqli_stmt_execute($stmt)) {
             $result = mysqli_stmt_get_result($stmt);
             if (mysqli_num_rows($result) == 1) {
                 $row = mysqli_fetch_assoc($result);
-
+                // fetches data from sql query and stashes them in the gloabl session varibale
                 $_SESSION["loggedin"] = true;
                 $_SESSION["name"] = $row['first_name'] . " " . $row['last_name'];
                 $_SESSION['h_id'] = $row['h_id'];
@@ -85,7 +98,7 @@ if (isset($_POST) && !empty($_POST)) {
                     $_SESSION["id"] = $row['d_id'];
                     $_SESSION["email"] = $row['d_email'];
                 }
-
+                // redirects upon successfully creating an account
                 header("location: ../profile_page");
                 exit;
             } else{

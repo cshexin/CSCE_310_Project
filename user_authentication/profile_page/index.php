@@ -1,18 +1,29 @@
 
 <?php
+/*
+
+Description: the home of the index page 
+Author: Andrew Mao
+
+*/
+
+
     // connect database
     include('../../config/db_connect.php');
 
+    // checks if session is started, if not then start it
     if(!isset($_SESSION)) 
     { 
       session_start(); 
     } 
+    // setting local variables for storing user data
     $dob = $fname = $lname = $email = $password = $doctor = $hosptial = "";
 
-
+    // checks if the user ID is set, if not then redirect to sign in page
     if (!isset($_SESSION["id"])) {
       header("location: ../signin_page");
     } else {
+      // extract user data from session and stores it in local variables
       $nameData = explode(" ", $_SESSION['name']);
       $fname = $nameData[0];
       $lname = $nameData[1];
@@ -24,7 +35,7 @@
       }
     }
 
-
+    // converts the doctor_id to the doctors name and stores it in a variable for displaying
     if ($_SESSION["isPatient"]){
         $sql = "SELECT * FROM doctor WHERE d_id = {$_SESSION['d_id']}";
         $stmt = mysqli_prepare($conn, $sql);
@@ -33,7 +44,7 @@
         $row = mysqli_fetch_assoc($result);
         $doctor = "Dr. " . " " . $row['first_name'] . " " . $row['last_name'];
     } 
-
+    // converts the hospital_id to the hospitals name and stores it in a variable for displaying
     $sql = "SELECT * FROM hospital WHERE h_id = {$_SESSION['h_id']}";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_execute($stmt);
