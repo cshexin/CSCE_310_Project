@@ -117,16 +117,16 @@ if (isset($_POST) && !empty($_POST)) {
         <form method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>>
             <div class="input-group">
                 <label>First Name</label>
-                <input type="text" name="fname" value="John">
+                <input type="text" name="fname">
             </div>
             <div class="input-group">
                     <label>Last Name</label>
-                    <input type="text" name="lname" value="Doe">
+                    <input type="text" name="lname">
             </div>
             <?php if ($_SESSION['isPatient']) { ?>
                 <div class="input-group">
                     <label>Date of Birth</label>
-                    <input type="date" name="dob" value="2023-04-30">
+                    <input type="date" name="dob">
                 </div>
             <?php } ?>
             <div class="input-group">
