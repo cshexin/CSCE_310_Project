@@ -1,3 +1,7 @@
+<!-- 
+    Description: File to make user edit post
+    Author: Hexin Hu
+ -->
 <?php
     include('../../config/db_connect.php');
     // error checking
