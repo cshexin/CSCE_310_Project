@@ -80,7 +80,7 @@ if (isset($_POST) && !empty($_POST)) {
                     $_SESSION["id"] = $row['p_id'];
                     $_SESSION["email"] = $row['p_email'];
                     $_SESSION['dob'] = $row['DOB'];
-                    $_SERVER["d_id"] = $row['d_id'];
+                    $_SESSION["d_id"] = $row['d_id'];
                 } else {
                     $_SESSION["id"] = $row['d_id'];
                     $_SESSION["email"] = $row['d_email'];
@@ -94,6 +94,8 @@ if (isset($_POST) && !empty($_POST)) {
         } else {
             echo "Invalid information entered";
         }
+    } else {
+        echo "Invalid information entered";
     }
 }
 ?>
